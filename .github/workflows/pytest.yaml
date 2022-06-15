@@ -1,5 +1,5 @@
-name: CI
-on: pull_request
+name: Run tests
+on: [push, pull_request]
 
 jobs:
   ci:
@@ -7,7 +7,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.8, 3.9]
-        poetry-version: [1.0, 1.1.11]
         os: [ubuntu-18.04, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -18,6 +17,8 @@ jobs:
       - name: Run image
         uses: abatilo/actions-poetry@v2.0.0
         with:
-          poetry-version: ${{ matrix.poetry-version }}
+          poetry-version: 1.1.13
       - name: Run pytest
-        run: poetry run pytest
+        run: |
+          poetry install --no-root
+          poetry run pytest
