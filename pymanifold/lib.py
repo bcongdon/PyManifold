@@ -41,7 +41,7 @@ class ManifoldClient:
         if self.api_key:
             return {"Authorization": "Key " + self.api_key}
         else:
-            return ArgumentError("No API key provided")
+            raise RuntimeError("No API key provided")
 
     def create_bet(self, contractId: str, amount: int, outcome: str) -> str:
         """

@@ -3,7 +3,7 @@ from pymanifold.types import Market
 import vcr
 import os
 
-API_KEY = os.getenv("MANIFOLD_API_KEY")
+API_KEY = os.getenv("MANIFOLD_API_KEY", "fake_api_key")
 
 manifold_vcr = vcr.VCR(
     cassette_library_dir="tests/fixtures/cassettes",
