@@ -1,0 +1,55 @@
+interactions:
+  - request:
+      body:
+        '{"outcomeType": "BINARY", "question": "Testing Binary Market creation through
+        API", "description": "Going to resolves as N/A", "closeTime": 4102444800000,
+        "tags": ["fun"], "initialProb": 99}'
+      headers:
+        Accept:
+          - "*/*"
+        Accept-Encoding:
+          - gzip, deflate
+        Connection:
+          - keep-alive
+        Content-Length:
+          - "190"
+        Content-Type:
+          - application/json
+        User-Agent:
+          - python-requests/2.28.0
+      method: POST
+      uri: https://manifold.markets/api/v0/market
+    response:
+      body:
+        string:
+          '{"id":"JNz71KomjIuJ79bjpCJD","slug":"testing-binary-market-creation-thro","mechanism":"cpmm-1","outcomeType":"BINARY","totalLiquidity":100,"initialProbability":0.99,"p":0.99,"pool":{"YES":100,"NO":100},"creatorId":"HjUZah4YkjUImgPS1AR5tnfWjTg2","creatorName":"Ben","creatorUsername":"bcongdon","creatorAvatarUrl":"https://lh3.googleusercontent.com/a-/AOh14GhNf21x93pt4uam3fXie3D3QYySjAUyPxE6TdOkwnA=s96-c","question":"Testing
+          Binary Market creation through API","description":"Going to resolves as N/A","tags":["fun"],"lowercaseTags":["fun"],"visibility":"public","isResolved":false,"createdTime":1655304763532,"closeTime":4102444800000,"volume":0,"volume24Hours":0,"volume7Days":0,"collectedFees":{"creatorFee":0,"liquidityFee":0,"platformFee":0}}'
+      headers:
+        Connection:
+          - keep-alive
+        Content-Type:
+          - application/json; charset=utf-8
+        cache-control:
+          - public, max-age=0, must-revalidate
+        content-length:
+          - "748"
+        date:
+          - Wed, 15 Jun 2022 14:52:43 GMT
+        etag:
+          - W/"2ec-lau8KbGmQjf8hhw6wqSOlPMgk0Y"
+        server:
+          - Vercel
+        strict-transport-security:
+          - max-age=63072000
+        vary:
+          - Origin
+        x-matched-path:
+          - /api/v0/market
+        x-vercel-cache:
+          - MISS
+        x-vercel-id:
+          - pdx1::cle1::dptjj-1655304763074-087f6310685e
+      status:
+        code: 200
+        message: OK
+version: 1
