@@ -54,10 +54,17 @@ def test_get_market_by_id():
 
 
 @manifold_vcr.use_cassette()
-def test_create_bet():
+def test_create_bet_binary():
     client = ManifoldClient(api_key=API_KEY)
     betId = client.create_bet(contractId="BxFQCoaaxBqRcnzJb1mV", amount=1, outcome="NO")
     assert betId == "ZhwL5DngCKdrZ7TQQFad"
+
+
+@manifold_vcr.use_cassette()
+def test_create_bet_free_response():
+    client = ManifoldClient(api_key=API_KEY)
+    betId = client.create_bet(contractId="Hbeirep6H6GXHFNiX6M1", amount=1, outcome="4")
+    assert betId == "8qgMoiHYfQlvkuyd3NRa"
 
 
 @manifold_vcr.use_cassette()
