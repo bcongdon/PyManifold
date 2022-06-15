@@ -41,6 +41,7 @@ market = client.create_market(
 - [ ] Create test for creating a numeric market
 - [ ] Publish a version of this package to PyPI
 - [ ] Setup CI to run tests against PRs
+- [ ] Add instructions for running tests that require an API key (e.g. setting the `MANIFOLD_API_KEY` environment variable)
 
 ## Running Tests
 
