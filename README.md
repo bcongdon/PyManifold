@@ -34,6 +34,12 @@ market = client.create_market(
 )
 ```
 
+## TODO
+
+- Create test for betting on a free response market
+- Create tests for creating a free response market
+- Create test for creating a numeric market
+
 ## Running Tests
 
 ```sh
