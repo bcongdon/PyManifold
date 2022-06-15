@@ -36,9 +36,11 @@ market = client.create_market(
 
 ## TODO
 
-- Create test for betting on a free response market
-- Create tests for creating a free response market
-- Create test for creating a numeric market
+- [ ] Create test for betting on a free response market
+- [ ] Create tests for creating a free response market
+- [ ] Create test for creating a numeric market
+- [ ] Publish a version of this package to PyPI
+- [ ] Setup CI to run tests against PRs
 
 ## Running Tests
 
