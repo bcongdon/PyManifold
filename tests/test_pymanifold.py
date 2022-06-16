@@ -83,11 +83,11 @@ def test_create_market_binary():
 
 
 @manifold_vcr.use_cassette()
-def test_create_market_binary():
+def test_create_market_free_response():
     client = ManifoldClient(api_key=API_KEY)
     market = client.create_market(
-        outcomeType="BINARY",
-        question="Testing Binary Market creation through API",
+        outcomeType="FREE_RESPONSE",
+        question="Testing Free Response Market creation through API",
         initialProb=99,
         description="Going to resolves as N/A",
         tags=["fun"],

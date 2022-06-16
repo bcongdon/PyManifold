@@ -1,0 +1,54 @@
+interactions:
+- request:
+    body: '{"outcomeType": "FREE_RESPONSE", "question": "Testing Free Response Market
+      creation through API", "description": "Going to resolves as N/A", "closeTime":
+      4102444800000, "tags": ["fun"]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '185'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.0
+    method: POST
+    uri: https://manifold.markets/api/v0/market
+  response:
+    body:
+      string: '{"id":"ymUrlWhajYVo5Mm98Mci","slug":"testing-free-response-market-creati","mechanism":"dpm-2","outcomeType":"FREE_RESPONSE","pool":{"0":100},"totalShares":{"0":100},"totalBets":{"0":100},"answers":[],"creatorId":"HjUZah4YkjUImgPS1AR5tnfWjTg2","creatorName":"Ben","creatorUsername":"bcongdon","creatorAvatarUrl":"https://lh3.googleusercontent.com/a-/AOh14GhNf21x93pt4uam3fXie3D3QYySjAUyPxE6TdOkwnA=s96-c","question":"Testing
+        Free Response Market creation through API","description":"Going to resolves
+        as N/A","tags":["fun"],"lowercaseTags":["fun"],"visibility":"public","isResolved":false,"createdTime":1655338512652,"closeTime":4102444800000,"volume":0,"volume24Hours":0,"volume7Days":0,"collectedFees":{"creatorFee":0,"liquidityFee":0,"platformFee":0}}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      cache-control:
+      - public, max-age=0, must-revalidate
+      content-length:
+      - '753'
+      date:
+      - Thu, 16 Jun 2022 00:15:13 GMT
+      etag:
+      - W/"2f1-XYd+hhMEChnGnW+kpV1XrmJep94"
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      vary:
+      - Origin
+      x-matched-path:
+      - /api/v0/market
+      x-vercel-cache:
+      - MISS
+      x-vercel-id:
+      - pdx1::cle1::vh26z-1655338511982-edf0c0fd4224
+    status:
+      code: 200
+      message: OK
+version: 1
