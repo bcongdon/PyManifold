@@ -1,5 +1,5 @@
 from pymanifold import __version__, ManifoldClient
-from pymanifold.types import Market
+from pymanifold.types import LiteMarket, Market
 import vcr
 import os
 
@@ -50,6 +50,8 @@ def test_get_market_by_id():
         market.url
         == "https://manifold.markets/bcongdon/will-bitcoins-price-fall-below-25k"
     )
+    assert len(market.bets) == 49
+    assert len(market.comments) == 5
     validate_market(market)
 
 
@@ -80,13 +82,34 @@ def test_create_market_binary():
     )
 
 
+@manifold_vcr.use_cassette()
+def test_create_market_binary():
+    client = ManifoldClient(api_key=API_KEY)
+    market = client.create_market(
+        outcomeType="BINARY",
+        question="Testing Binary Market creation through API",
+        initialProb=99,
+        description="Going to resolves as N/A",
+        tags=["fun"],
+        closeTime=4102444800000,
+    )
+    validate_lite_market(market)
+
+
+def validate_lite_market(market: LiteMarket):
+    assert market.id
+    assert market.creatorUsername
+    assert market.question
+    assert market.description
+
+
 def validate_market(market: Market):
-    assert len(market.bets) == 49
+    validate_lite_market(market)
+
     for b in market.bets:
         assert b.id
         assert b.amount != 0
 
-    assert len(market.comments) == 5
     for c in market.comments:
         assert c.id
         assert c.contractId
