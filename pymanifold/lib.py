@@ -1,9 +1,7 @@
-from argparse import ArgumentError
 import requests
-import json
 from typing import Optional, List
 
-from .types import Market, LiteMarket, Bet
+from .types import Market, LiteMarket
 
 BASE_URI = "https://manifold.markets/api/v0"
 
@@ -60,7 +58,58 @@ class ManifoldClient:
         )
         return response.json()["betId"]
 
-    def create_market(
+    def create_free_response_market(
+        self,
+        question: str,
+        description: str,
+        closeTime: int,
+        tags: Optional[List[str]] = None,
+    ):
+        """
+        Create a free response market
+        """
+        return self._create_market(
+            "FREE_RESPONSE", question, description, closeTime, tags
+        )
+
+    def create_numeric_market(
+        self,
+        question: str,
+        description: str,
+        closeTime: int,
+        minValue: int,
+        maxValue: int,
+        tags: Optional[List[str]] = None,
+    ):
+        """
+        Create a numeric market
+        """
+        return self._create_market(
+            "NUMERIC",
+            question,
+            description,
+            closeTime,
+            tags,
+            minValue=minValue,
+            maxValue=maxValue,
+        )
+
+    def create_binary_market(
+        self,
+        question: str,
+        description: str,
+        closeTime: int,
+        tags: Optional[List[str]] = None,
+        initialProb: Optional[int] = 50,
+    ):
+        """
+        Create a binary market
+        """
+        return self._create_market(
+            "BINARY", question, description, closeTime, tags, initialProb=initialProb
+        )
+
+    def _create_market(
         self,
         outcomeType: str,
         question: str,

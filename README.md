@@ -24,8 +24,7 @@ betId = client.create_bet(contractId="BxFQCoaaxBqRcnzJb1mV", amount=1, outcome="
 
 # Create a market
 client = ManifoldClient(api_key=API_KEY)
-market = client.create_market(
-    outcomeType="BINARY",
+market = client.create_binary_market(
     question="Testing Binary Market creation through API",
     initialProb=99,
     description="Going to resolves as N/A",

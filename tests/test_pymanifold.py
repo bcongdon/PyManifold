@@ -72,23 +72,21 @@ def test_create_bet_free_response():
 @manifold_vcr.use_cassette()
 def test_create_market_binary():
     client = ManifoldClient(api_key=API_KEY)
-    market = client.create_market(
-        outcomeType="BINARY",
+    market = client.create_binary_market(
         question="Testing Binary Market creation through API",
         initialProb=99,
         description="Going to resolves as N/A",
         tags=["fun"],
         closeTime=4102444800000,
     )
+    validate_lite_market(market)
 
 
 @manifold_vcr.use_cassette()
 def test_create_market_free_response():
     client = ManifoldClient(api_key=API_KEY)
-    market = client.create_market(
-        outcomeType="FREE_RESPONSE",
+    market = client.create_free_response_market(
         question="Testing Free Response Market creation through API",
-        initialProb=99,
         description="Going to resolves as N/A",
         tags=["fun"],
         closeTime=4102444800000,
@@ -99,8 +97,7 @@ def test_create_market_free_response():
 @manifold_vcr.use_cassette()
 def test_create_market_numeric():
     client = ManifoldClient(api_key=API_KEY)
-    market = client.create_market(
-        outcomeType="NUMERIC",
+    market = client.create_numeric_market(
         question="Testing Numeric Response Market creation through API",
         minValue=0,
         maxValue=100,
