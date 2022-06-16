@@ -96,6 +96,21 @@ def test_create_market_free_response():
     validate_lite_market(market)
 
 
+@manifold_vcr.use_cassette()
+def test_create_market_numeric():
+    client = ManifoldClient(api_key=API_KEY)
+    market = client.create_market(
+        outcomeType="NUMERIC",
+        question="Testing Numeric Response Market creation through API",
+        minValue=0,
+        maxValue=100,
+        description="Going to resolves as N/A",
+        tags=["fun"],
+        closeTime=4102444800000,
+    )
+    validate_lite_market(market)
+
+
 def validate_lite_market(market: LiteMarket):
     assert market.id
     assert market.creatorUsername

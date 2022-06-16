@@ -36,7 +36,6 @@ market = client.create_market(
 
 ## TODO
 
-- [ ] Create test for creating a numeric market
 - [ ] Publish a version of this package to PyPI
 - [ ] Add instructions for running tests that require an API key (e.g. setting the `MANIFOLD_API_KEY` environment variable)
 

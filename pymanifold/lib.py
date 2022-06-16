@@ -87,10 +87,12 @@ class ManifoldClient:
         elif outcomeType == "FREE_RESPONSE":
             pass
         elif outcomeType == "NUMERIC":
-            data["minValue"] = minValue
-            data["maxValue"] = maxValue
+            data["min"] = minValue
+            data["max"] = maxValue
         else:
-            raise Exception("Invalid outcome type")
+            raise Exception(
+                "Invalid outcome type. Outcome should be one of: BINARY, FREE_RESPONSE, NUMERIC"
+            )
 
         response = requests.post(
             url=BASE_URI + "/market",
