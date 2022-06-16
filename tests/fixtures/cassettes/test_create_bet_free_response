@@ -1,0 +1,50 @@
+interactions:
+- request:
+    body: '{"amount": 1, "contractId": "Hbeirep6H6GXHFNiX6M1", "outcome": "4"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '67'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.0
+    method: POST
+    uri: https://manifold.markets/api/v0/bet
+  response:
+    body:
+      string: '{"betId":"8qgMoiHYfQlvkuyd3NRa"}'
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      cache-control:
+      - public, max-age=0, must-revalidate
+      content-length:
+      - '32'
+      date:
+      - Wed, 15 Jun 2022 23:59:02 GMT
+      etag:
+      - W/"20-/9X73StRCayv4cNiqBBCLC4Keg8"
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      vary:
+      - Origin
+      x-matched-path:
+      - /api/v0/bet
+      x-vercel-cache:
+      - MISS
+      x-vercel-id:
+      - pdx1::cle1::bx9wd-1655337541737-e5f678642285
+    status:
+      code: 200
+      message: OK
+version: 1
