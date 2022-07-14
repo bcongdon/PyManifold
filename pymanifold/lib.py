@@ -1,5 +1,6 @@
+from typing import Dict, Optional, List, Union
+
 import requests
-from typing import Optional, List
 
 from .types import Market, LiteMarket
 
@@ -40,6 +41,19 @@ class ManifoldClient:
             return {"Authorization": "Key " + self.api_key}
         else:
             raise RuntimeError("No API key provided")
+
+    def cancel_market(self, market: Union[LiteMarket, str]):
+        try:
+            marketId = market.id
+        except AttributeError:
+            marketId = market
+        return requests.post(
+            url=BASE_URI + "/market/" + marketId + "/resolve",
+            json={
+                "outcome": "CANCEL",
+            },
+            headers=self._auth_headers(),
+        )
 
     def create_bet(self, contractId: str, amount: int, outcome: str) -> str:
         """
@@ -149,3 +163,54 @@ class ManifoldClient:
             headers=self._auth_headers(),
         )
         return LiteMarket.from_dict(response.json())
+
+    def resolve_market(self, market: Union[LiteMarket, str], *args, **kwargs):
+        try:
+            market.id
+        except AttributeError:
+            market = self.get_market_by_id(market)
+        match market.outcomeType:
+            case "BINARY":
+                return self._resolve_binary_market(market, *args, **kwargs)
+            case "FREE_RESPONSE":
+                return self._resolve_free_response_market(market, *args, **kwargs)
+            case "NUMERIC":
+                return self._resolve_numeric_market(market, *args, **kwargs)
+            case _:
+                raise NotImplementedError()
+
+    def _resolve_binary_market(self, market, probabilityInt: int):
+        match probabilityInt:
+            case 100:
+                json = {"outcome": "YES"}
+            case 0:
+                json = {"outcome": "NO"}
+            case _:
+                json = {"outcome": "MKT", "probabilityInt": probabilityInt}
+
+        return requests.post(
+            url=BASE_URI + "/v0/market/" + market.id + "/resolve",
+            json=json,
+            headers=self._auth_headers(),
+        )
+
+    def _resolve_free_response_market(self, market, weights: Dict[int, float]):
+        if len(weights) == 1:
+            json = {"outcome": weights.pop()}
+        else:
+            total = sum(weights.values())
+            json = {
+                "outcome": "MKT",
+                "resolutions": [
+                    {"answer": index, "pct": weight / total}
+                    for index, weight in weights.items()
+                ]
+            }
+        return requests.post(
+            url=BASE_URI + "/v0/market/" + market.id + "/resolve",
+            json=json,
+            headers=self._auth_headers(),
+        )
+
+    def _resolve_numeric_market(self, market, number: float):
+        raise NotImplementedError("TODO: I suspect the relevant docs are out of date")

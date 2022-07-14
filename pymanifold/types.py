@@ -50,6 +50,7 @@ class LiteMarket(DictDeserializable):
     description: str
     tags: List[str]
 
+    outcomeType: str  # BINARY, FREE_RESPONSE, or NUMERIC
     pool: float
     volume7Days: float
     volume24Hours: float
