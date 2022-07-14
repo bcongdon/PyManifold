@@ -3,22 +3,23 @@ from typing import Dict, Optional, List
 import inspect
 
 
-@dataclass
-class Bet:
-    amount: int
-    contractId: str
-    createdTime: int
-    id: str
-
+class DictDeserializable:
     @classmethod
     def from_dict(cls, env):
         return cls(
             **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
         )
 
+@dataclass
+class Bet(DictDeserializable):
+    amount: int
+    contractId: str
+    createdTime: int
+    id: str
+
 
 @dataclass
-class Comment:
+class Comment(DictDeserializable):
     contractId: str
     createdTime: int
     id: str
@@ -29,15 +30,9 @@ class Comment:
     userAvatarUrl: str
     userUsername: str
 
-    @classmethod
-    def from_dict(cls, env):
-        return cls(
-            **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
-        )
-
 
 @dataclass
-class LiteMarket:
+class LiteMarket(DictDeserializable):
     """Represents a lite market"""
 
     # Unique identifer for this market
@@ -67,13 +62,6 @@ class LiteMarket:
     # https://github.com/manifoldmarkets/manifold/issues/508
     url: Optional[str] = None
 
-    @classmethod
-    def from_dict(cls, env):
-        market = cls(
-            **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
-        )
-        return market
-
 
 @dataclass
 class Market(LiteMarket):
@@ -85,9 +73,7 @@ class Market(LiteMarket):
 
     @classmethod
     def from_dict(cls, env):
-        market = cls(
-            **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
-        )
+        market = super(cls).from_dict(cls, env)
         market.bets = [Bet.from_dict(bet) for bet in env["bets"]]
         market.comments = [Comment.from_dict(bet) for bet in env["comments"]]
         return market
