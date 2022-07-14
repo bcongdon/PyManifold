@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, List
+from typing import Dict, Optional, List
 import inspect
 
 
@@ -81,6 +81,7 @@ class Market(LiteMarket):
 
     bets: List[Bet] = None
     comments: List[Comment] = None
+    answers: Optional[Dict[str, str]] = None
 
     @classmethod
     def from_dict(cls, env):
