@@ -74,7 +74,7 @@ class Market(LiteMarket):
 
     @classmethod
     def from_dict(cls, env):
-        market = super(cls).from_dict(cls, env)
+        market = super(Market, cls).from_dict(env)
         market.bets = [Bet.from_dict(bet) for bet in env["bets"]]
         market.comments = [Comment.from_dict(bet) for bet in env["comments"]]
         return market
