@@ -189,7 +189,7 @@ class ManifoldClient:
                 json = {"outcome": "MKT", "probabilityInt": probabilityInt}
 
         return requests.post(
-            url=BASE_URI + "/v0/market/" + market.id + "/resolve",
+            url=BASE_URI + "/market/" + market.id + "/resolve",
             json=json,
             headers=self._auth_headers(),
         )
@@ -207,7 +207,7 @@ class ManifoldClient:
                 ]
             }
         return requests.post(
-            url=BASE_URI + "/v0/market/" + market.id + "/resolve",
+            url=BASE_URI + "/market/" + market.id + "/resolve",
             json=json,
             headers=self._auth_headers(),
         )
