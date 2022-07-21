@@ -152,11 +152,8 @@ class ManifoldClient:
         )
         return LiteMarket.from_dict(response.json())
     
-    def kelly_calc(self, market, subjective_probability, balance, initial_market_probability=0.5):
-        """For a given binary market, find the bet that maximises expected log wealth.
-        IMPORTANT: The probability that the markets was initialised at (50% for all new markets; you used to be
-        able to change it) needs to be correct. This function does not (currently) check whether this has been
-        done correctly. You (yes, you) need to do this."""
+    def kelly_calc(self, market, subjective_probability, balance):
+        """For a given binary market, find the bet that maximises expected log wealth."""
         
         def shares_bought(pool, bet, outcome, p=0.5):
             """Figure out the number of shares a given purchace yields. Returns the number of shares and the resulting pool.
@@ -219,6 +216,9 @@ class ManifoldClient:
 
             return E
 
+        # find the probability the market was initialised at
+        initial_market_probability = market.bets[0]['probBefore']
+        
         pool = market.pool
 
         if subjective_probability == market.probability:
