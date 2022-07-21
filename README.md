@@ -48,7 +48,6 @@ client.kelly_calc(
 - [ ] Publish a version of this package to PyPI
 - [ ] Add instructions for running tests that require an API key (e.g. setting the `MANIFOLD_API_KEY` environment variable)
 
-- [ ] Automatically find the initial market probability
 - [ ] Generalise to correlated markets
 
 ## Running Tests
