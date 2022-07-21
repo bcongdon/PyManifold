@@ -33,8 +33,9 @@ market = client.create_binary_market(
 )
 
 # Find optimal Kelly bet
+market = client.get_market_by_slug("for-this-study-published-in-nature")
 client.kelly_calc(
-     slug = "for-this-study-published-in-nature"
+     market = market
      subjective_probability = 0.8
      balance = 800
      initial_market_probability = 0.5
