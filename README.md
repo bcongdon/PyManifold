@@ -34,7 +34,7 @@ market = client.create_binary_market(
 
 # Find optimal Kelly bet
 market = client.get_market_by_slug("for-this-study-published-in-nature")
-client.kelly_calc(
+utils.kelly_calc(
      market = market
      subjective_probability = 0.8
      balance = 800
@@ -48,7 +48,7 @@ client.kelly_calc(
 - [ ] Publish a version of this package to PyPI
 - [ ] Add instructions for running tests that require an API key (e.g. setting the `MANIFOLD_API_KEY` environment variable)
 
-- [ ] Generalise to correlated markets
+- [ ] Generalize `kelly_bet` to correlated markets
 
 ## Running Tests
 
