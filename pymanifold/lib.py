@@ -1,4 +1,6 @@
 import requests
+from numpy import log as ln, argmax
+
 from typing import Optional, List
 
 from .types import Market, LiteMarket
