@@ -50,7 +50,7 @@ class LiteMarket(DictDeserializable):
     description: str
     tags: List[str]
 
-    outcomeType: str  # BINARY, FREE_RESPONSE, or NUMERIC
+    outcomeType: str  # BINARY, FREE_RESPONSE, NUMERIC, or PSEUDO_NUMERIC
     pool: float
     volume7Days: float
     volume24Hours: float
@@ -58,6 +58,8 @@ class LiteMarket(DictDeserializable):
     probability: Optional[float] = None
     resolutionTime: Optional[int] = None
     resolution: Optional[str] = None
+
+    p: Optional[float] = None
 
     # This should not be optional, once market creation returns the URL in the response.
     # https://github.com/manifoldmarkets/manifold/issues/508

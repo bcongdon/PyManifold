@@ -174,8 +174,8 @@ class ManifoldClient:
                 return self._resolve_binary_market(market, *args, **kwargs)
             case "FREE_RESPONSE":
                 return self._resolve_free_response_market(market, *args, **kwargs)
-            case "NUMERIC":
-                return self._resolve_numeric_market(market, *args, **kwargs)
+            case "PSEUDO_NUMERIC":
+                return self._resolve_pseudo_numeric_market(market, *args, **kwargs)
             case _:
                 raise NotImplementedError()
 
@@ -187,6 +187,21 @@ class ManifoldClient:
                 json = {"outcome": "NO"}
             case _:
                 json = {"outcome": "MKT", "probabilityInt": probabilityInt}
+
+        return requests.post(
+            url=BASE_URI + "/market/" + market.id + "/resolve",
+            json=json,
+            headers=self._auth_headers(),
+        )
+
+    def _resolve_psuedo_numeric_market(self, market, resolutionValue: int):
+        match resolutionValue:
+            case market.max | float('inf'):
+                json = {"outcome": "YES"}
+            case market.min:
+                json = {"outcome": "NO"}
+            case _:
+                json = {"outcome": "MKT", "resolutionValue": resolutionValue}
 
         return requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
