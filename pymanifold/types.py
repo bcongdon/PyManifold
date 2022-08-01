@@ -60,6 +60,9 @@ class LiteMarket(DictDeserializable):
     resolution: Optional[str] = None
 
     p: Optional[float] = None
+    min: Optional[float] = None
+    max: Optional[float] = None
+    isLogScale: Optional[bool] = None
 
     # This should not be optional, once market creation returns the URL in the response.
     # https://github.com/manifoldmarkets/manifold/issues/508
