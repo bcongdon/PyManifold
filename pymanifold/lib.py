@@ -1,4 +1,4 @@
-from typing import Dict, Optional, List, Union
+from typing import Dict, Optional, List, Tuple, Union
 
 import requests
 
@@ -179,7 +179,7 @@ class ManifoldClient:
             case _:
                 raise NotImplementedError()
 
-    def _resolve_binary_market(self, market, probabilityInt: int):
+    def _resolve_binary_market(self, market, probabilityInt: float):
         match probabilityInt:
             case 100:
                 json = {"outcome": "YES"}
@@ -194,14 +194,14 @@ class ManifoldClient:
             headers=self._auth_headers(),
         )
 
-    def _resolve_psuedo_numeric_market(self, market, resolutionValue: int):
+    def _resolve_pseudo_numeric_market(self, market, resolutionValue: Tuple[float, float]):
         match resolutionValue:
             case market.max | float('inf'):
                 json = {"outcome": "YES"}
             case market.min:
                 json = {"outcome": "NO"}
             case _:
-                json = {"outcome": "MKT", "resolutionValue": resolutionValue}
+                json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
 
         return requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
