@@ -10,6 +10,7 @@ class DictDeserializable:
             **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
         )
 
+
 @dataclass
 class Bet(DictDeserializable):
     amount: int
@@ -23,12 +24,12 @@ class Comment(DictDeserializable):
     contractId: str
     createdTime: int
     id: str
-    text: str
+    text: str = ""
 
-    userId: str
-    userName: str
-    userAvatarUrl: str
-    userUsername: str
+    userId: str = ""
+    userName: str = ""
+    userAvatarUrl: str = ""
+    userUsername: str = ""
 
 
 @dataclass

@@ -62,9 +62,9 @@ class ManifoldClient:
         Returns the ID of the created bet.
         """
         json = {
-                "amount": int(amount),
-                "contractId": contractId,
-                "outcome": outcome,
+            "amount": int(amount),
+            "contractId": contractId,
+            "outcome": outcome,
         }
         if limitProb is not None:
             json['limitProb'] = limitProb
