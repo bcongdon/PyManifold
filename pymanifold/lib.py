@@ -177,6 +177,8 @@ class ManifoldClient:
                 return self._resolve_binary_market(market, *args, **kwargs)
             case "FREE_RESPONSE":
                 return self._resolve_free_response_market(market, *args, **kwargs)
+            case "MULTIPLE_CHOICE":
+                return self._resolve_multiple_choice_market(market, *args, **kwargs)
             case "PSEUDO_NUMERIC":
                 return self._resolve_pseudo_numeric_market(market, *args, **kwargs)
             case _:
@@ -214,7 +216,7 @@ class ManifoldClient:
 
     def _resolve_free_response_market(self, market, weights: Dict[int, float]):
         if len(weights) == 1:
-            json = {"outcome": weights.pop()}
+            json = {"outcome": next(iter(weights))}
         else:
             total = sum(weights.values())
             json = {
@@ -229,6 +231,9 @@ class ManifoldClient:
             json=json,
             headers=self._auth_headers(),
         )
+
+    def _resolve_multiple_choice_market(self, market, weights: Dict[int, float]):
+        return self._resolve_free_response_market(market, weights)
 
     def _resolve_numeric_market(self, market, number: float):
         raise NotImplementedError("TODO: I suspect the relevant docs are out of date")
