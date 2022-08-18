@@ -55,19 +55,22 @@ class ManifoldClient:
             headers=self._auth_headers(),
         )
 
-    def create_bet(self, contractId: str, amount: int, outcome: str) -> str:
+    def create_bet(self, contractId: str, amount: int, outcome: str, limitProb: Optional[float] = None) -> str:
         """
         Place a bet
 
         Returns the ID of the created bet.
         """
-        response = requests.post(
-            url=BASE_URI + "/bet",
-            json={
+        json = {
                 "amount": int(amount),
                 "contractId": contractId,
                 "outcome": outcome,
-            },
+        }
+        if limitProb is not None:
+            json['limitProb'] = limitProb
+        response = requests.post(
+            url=BASE_URI + "/bet",
+            json=json,
             headers=self._auth_headers(),
         )
         return response.json()["betId"]
