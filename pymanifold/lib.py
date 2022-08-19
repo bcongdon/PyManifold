@@ -1,4 +1,4 @@
-from typing import Dict, Optional, List, Tuple, Union
+from typing import Any, Dict, Optional, List, Tuple, Union
 
 import requests
 
@@ -172,26 +172,24 @@ class ManifoldClient:
             market.id
         except AttributeError:
             market = self.get_market_by_id(market)
-        match market.outcomeType:
-            case "BINARY":
-                return self._resolve_binary_market(market, *args, **kwargs)
-            case "FREE_RESPONSE":
-                return self._resolve_free_response_market(market, *args, **kwargs)
-            case "MULTIPLE_CHOICE":
-                return self._resolve_multiple_choice_market(market, *args, **kwargs)
-            case "PSEUDO_NUMERIC":
-                return self._resolve_pseudo_numeric_market(market, *args, **kwargs)
-            case _:
-                raise NotImplementedError()
+        if market.outcomeType == "BINARY":
+            return self._resolve_binary_market(market, *args, **kwargs)
+        elif market.outcomeType == "FREE_RESPONSE":
+            return self._resolve_free_response_market(market, *args, **kwargs)
+        elif market.outcomeType == "MULTIPLE_CHOICE":
+            return self._resolve_multiple_choice_market(market, *args, **kwargs)
+        elif market.outcomeType == "PSEUDO_NUMERIC":
+            return self._resolve_pseudo_numeric_market(market, *args, **kwargs)
+        else:
+            raise NotImplementedError()
 
     def _resolve_binary_market(self, market, probabilityInt: float):
-        match probabilityInt:
-            case 100:
-                json = {"outcome": "YES"}
-            case 0:
-                json = {"outcome": "NO"}
-            case _:
-                json = {"outcome": "MKT", "probabilityInt": probabilityInt}
+        if probabilityInt == 100:
+            json = {"outcome": "YES"}
+        elif probabilityInt == 0:
+            json = {"outcome": "NO"}
+        else:
+            json = {"outcome": "MKT", "probabilityInt": probabilityInt}
 
         return requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
@@ -200,13 +198,12 @@ class ManifoldClient:
         )
 
     def _resolve_pseudo_numeric_market(self, market, resolutionValue: Tuple[float, float]):
-        match resolutionValue:
-            case market.max | float('inf'):
-                json = {"outcome": "YES"}
-            case market.min:
-                json = {"outcome": "NO"}
-            case _:
-                json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
+        if resolutionValue in (market.max, float('inf')):
+            json = {"outcome": "YES"}
+        elif resolutionValue == market.min:
+            json = {"outcome": "NO"}
+        else:
+            json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
 
         return requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
@@ -216,7 +213,7 @@ class ManifoldClient:
 
     def _resolve_free_response_market(self, market, weights: Dict[int, float]):
         if len(weights) == 1:
-            json = {"outcome": next(iter(weights))}
+            json: Dict[str, Any] = {"outcome": next(iter(weights))}
         else:
             total = sum(weights.values())
             json = {
