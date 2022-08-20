@@ -1,11 +1,14 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, Optional, List
 import inspect
 
 
 class DictDeserializable:
+    """An object which can be deserialized from a known dictionary spec."""
+
     @classmethod
     def from_dict(cls, env):
+        """Take a dictionary and return an instance of the associated class."""
         return cls(
             **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
         )
@@ -13,6 +16,8 @@ class DictDeserializable:
 
 @dataclass
 class Bet(DictDeserializable):
+    """Represents a bet."""
+
     amount: int
     contractId: str
     createdTime: int
@@ -21,6 +26,8 @@ class Bet(DictDeserializable):
 
 @dataclass
 class Comment(DictDeserializable):
+    """Represents a comment."""
+
     contractId: str
     createdTime: int
     id: str
@@ -34,7 +41,7 @@ class Comment(DictDeserializable):
 
 @dataclass
 class LiteMarket(DictDeserializable):
-    """Represents a lite market"""
+    """Represents a lite market."""
 
     # Unique identifer for this market
     id: str
@@ -72,14 +79,15 @@ class LiteMarket(DictDeserializable):
 
 @dataclass
 class Market(LiteMarket):
-    """Represents a market"""
+    """Represents a market."""
 
-    bets: List[Bet] = None
-    comments: List[Comment] = None
+    bets: List[Bet] = field(default_factory=list)
+    comments: List[Comment] = field(default_factory=list)
     answers: Optional[Dict[str, str]] = None
 
     @classmethod
     def from_dict(cls, env):
+        """Take a dictionary and return an instance of the associated class."""
         market = super(Market, cls).from_dict(env)
         market.bets = [Bet.from_dict(bet) for bet in env["bets"]]
         market.comments = [Comment.from_dict(bet) for bet in env["comments"]]

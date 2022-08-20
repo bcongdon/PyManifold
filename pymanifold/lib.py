@@ -8,31 +8,27 @@ BASE_URI = "https://manifold.markets/api/v0"
 
 
 class ManifoldClient:
+    """A client for interacting with the website manifold.markets."""
+
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key
 
     def list_markets(
         self, limit: Optional[int] = None, before: Optional[str] = None
     ) -> List[LiteMarket]:
-        """
-        List all markets
-        """
+        """List all markets."""
         response = requests.get(
             url=BASE_URI + "/markets", params={"limit": limit, "before": before}
         )
         return [LiteMarket.from_dict(market) for market in response.json()]
 
     def get_market_by_id(self, market_id: str) -> Market:
-        """
-        Get a market by id
-        """
+        """Get a market by id."""
         response = requests.get(url=BASE_URI + "/market/" + market_id)
         return Market.from_dict(response.json())
 
     def get_market_by_slug(self, slug: str) -> Market:
-        """
-        Get a market by slug
-        """
+        """Get a market by slug."""
         response = requests.get(url=BASE_URI + "/slug/" + slug)
         return Market.from_dict(response.json())
 
@@ -43,9 +39,10 @@ class ManifoldClient:
             raise RuntimeError("No API key provided")
 
     def cancel_market(self, market: Union[LiteMarket, str]):
-        try:
+        """Cancel a market, resolving it N/A."""
+        if isinstance(market, LiteMarket):
             marketId = market.id
-        except AttributeError:
+        else:
             marketId = market
         return requests.post(
             url=BASE_URI + "/market/" + marketId + "/resolve",
@@ -56,8 +53,7 @@ class ManifoldClient:
         )
 
     def create_bet(self, contractId: str, amount: int, outcome: str, limitProb: Optional[float] = None) -> str:
-        """
-        Place a bet
+        """Place a bet.
 
         Returns the ID of the created bet.
         """
@@ -82,9 +78,7 @@ class ManifoldClient:
         closeTime: int,
         tags: Optional[List[str]] = None,
     ):
-        """
-        Create a free response market
-        """
+        """Create a free response market."""
         return self._create_market(
             "FREE_RESPONSE", question, description, closeTime, tags
         )
@@ -98,9 +92,7 @@ class ManifoldClient:
         maxValue: int,
         tags: Optional[List[str]] = None,
     ):
-        """
-        Create a numeric market
-        """
+        """Create a numeric market."""
         return self._create_market(
             "NUMERIC",
             question,
@@ -119,9 +111,7 @@ class ManifoldClient:
         tags: Optional[List[str]] = None,
         initialProb: Optional[int] = 50,
     ):
-        """
-        Create a binary market
-        """
+        """Create a binary market."""
         return self._create_market(
             "BINARY", question, description, closeTime, tags, initialProb=initialProb
         )
@@ -137,10 +127,7 @@ class ManifoldClient:
         minValue: Optional[int] = None,
         maxValue: Optional[int] = None,
     ):
-        """
-        Create a market
-        """
-
+        """Create a market."""
         data = {
             "outcomeType": outcomeType,
             "question": question,
@@ -168,9 +155,8 @@ class ManifoldClient:
         return LiteMarket.from_dict(response.json())
 
     def resolve_market(self, market: Union[LiteMarket, str], *args, **kwargs):
-        try:
-            market.id
-        except AttributeError:
+        """Resolve a market, with different inputs depending on its type."""
+        if not isinstance(market, LiteMarket):
             market = self.get_market_by_id(market)
         if market.outcomeType == "BINARY":
             return self._resolve_binary_market(market, *args, **kwargs)
@@ -185,7 +171,7 @@ class ManifoldClient:
 
     def _resolve_binary_market(self, market, probabilityInt: float):
         if probabilityInt == 100:
-            json = {"outcome": "YES"}
+            json: Dict[str, Union[float, str]] = {"outcome": "YES"}
         elif probabilityInt == 0:
             json = {"outcome": "NO"}
         else:
@@ -199,7 +185,7 @@ class ManifoldClient:
 
     def _resolve_pseudo_numeric_market(self, market, resolutionValue: Tuple[float, float]):
         if resolutionValue in (market.max, float('inf')):
-            json = {"outcome": "YES"}
+            json: Dict[str, Union[float, str]] = {"outcome": "YES"}
         elif resolutionValue == market.min:
             json = {"outcome": "NO"}
         else:
