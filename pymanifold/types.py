@@ -55,7 +55,7 @@ class LiteMarket(DictDeserializable):
     # Market attributes. All times are in milliseconds since epoch
     closeTime: Optional[int]
     question: str
-    description: str
+    # description: str
     tags: List[str]
 
     outcomeType: str  # BINARY, FREE_RESPONSE, NUMERIC, or PSEUDO_NUMERIC
@@ -63,6 +63,7 @@ class LiteMarket(DictDeserializable):
     volume7Days: float
     volume24Hours: float
     isResolved: bool
+    description: str = ""
     probability: Optional[float] = None
     resolutionTime: Optional[int] = None
     resolution: Optional[str] = None
