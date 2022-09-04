@@ -7,6 +7,8 @@ This is still a work in progress.
 ## Usage
 
 ```python
+from pymanifold import ManifoldClient
+
 # List markets
 client = ManifoldClient()
 markets = client.list_markets()
@@ -31,12 +33,25 @@ market = client.create_binary_market(
     tags=["fun"],
     closeTime=4102444800000,
 )
+
+# Find optimal Kelly bet
+from pymanifold.utils import kelly_calc
+
+market = client.get_market_by_slug("for-this-study-published-in-nature")
+utils.kelly_calc(
+     market = market
+     subjective_probability = 0.8
+     balance = 800
+     initial_market_probability = 0.5
+)
+
 ```
 
 ## TODO
 
 - [ ] Publish a version of this package to PyPI
 - [ ] Add instructions for running tests that require an API key (e.g. setting the `MANIFOLD_API_KEY` environment variable)
+- [ ] Generalize `kelly_bet` to correlated markets
 
 ## Running Tests
 
