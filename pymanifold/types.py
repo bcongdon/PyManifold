@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, Optional, List
+from typing import Dict, Iterable, Optional, List
 import inspect
 
 
@@ -93,3 +93,52 @@ class Market(LiteMarket):
         market.bets = [Bet.from_dict(bet) for bet in env["bets"]]
         market.comments = [Comment.from_dict(bet) for bet in env["comments"]]
         return market
+
+
+@dataclass
+class Group(DictDeserializable):
+    """Represents a group."""
+
+    name: str = ""
+    creatorId: str = ""
+    id: str = ""
+    contractIds: List[str] = field(default_factory=list)
+    mostRecentActivityTime: int = -1
+    anyoneCanJoin: bool = False
+    mostRecentContractAddedTime: int = -1
+    createdTime: int = -1
+    memberIds: List[str] = field(default_factory=list)
+    slug: str = ""
+    about: str = ""
+
+    def contracts(self, client) -> Iterable[Market]:
+        """Iterate over the markets in this group."""
+        return (client.get_market_by_id(id_) for id_ in self.contractIds)
+
+    def members(self, client) -> Iterable["LiteUser"]:
+        """Iterate over the users in this group."""
+        return (client.get_user_by_id(id_) for id_ in self.memberIds)
+
+
+class LiteUser(DictDeserializable):
+    """Basic information about a user."""
+
+    id: str  # user's unique id
+    createdTime: float  # as usual, in ms since epoch
+
+    name: str  # display name, may contain spaces
+    username: str  # username, used in urls
+    url: str  # link to user's profile
+    avatarUrl: Optional[str] = None
+
+    bio: Optional[str] = None
+    bannerUrl: Optional[str] = None
+    website: Optional[str] = None
+    twitterHandle: Optional[str] = None
+    discordHandle: Optional[str] = None
+
+    # Note: the following are here for convenience only and may be removed in the future.
+    balance: float = 0.0
+    totalDeposits: float = 0.0
+    totalPnLCached: float = 0.0
+    creatorVolumeCached: float = 0.0
