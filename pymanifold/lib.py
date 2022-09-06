@@ -304,7 +304,7 @@ class ManifoldClient:
             json = {
                 "outcome": "MKT",
                 "resolutions": [
-                    {"answer": index, "pct": weight / total}
+                    {"answer": index, "pct": 100 * weight / total}
                     for index, weight in weights.items()
                 ]
             }
