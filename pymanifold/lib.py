@@ -1,6 +1,6 @@
 from itertools import chain
 from math import inf
-from typing import Any, Dict, Iterable, Optional, List, Tuple, Union
+from typing import Any, Dict, Iterable, Optional, List, Sequence, Tuple, Union
 
 import requests
 
@@ -165,6 +165,19 @@ class ManifoldClient:
             "FREE_RESPONSE", question, description, closeTime, tags
         )
 
+    def create_multiple_choice_market(
+        self,
+        question: str,
+        description: str,
+        closeTime: int,
+        answers: List[str],
+        tags: Optional[List[str]] = None,
+    ):
+        """Create a free response market."""
+        return self._create_market(
+            "MULTIPLE_CHOICE", question, description, closeTime, tags, answers=answers
+        )
+
     def create_numeric_market(
         self,
         question: str,
@@ -214,6 +227,7 @@ class ManifoldClient:
         minValue: Optional[int] = None,
         maxValue: Optional[int] = None,
         isLogScale: Optional[bool] = None,
+        answers: Optional[Sequence[str]] = None,
     ):
         """Create a market."""
         data = {
@@ -234,9 +248,11 @@ class ManifoldClient:
             if initialValue is None:
                 raise ValueError("Needs initial value")
             data["initialValue"] = initialValue
+        elif outcomeType == "MULTIPLE_CHOICE":
+            data["answers"] = answers
         else:
             raise Exception(
-                "Invalid outcome type. Outcome should be one of: BINARY, FREE_RESPONSE, PSEUDO_NUMERIC"
+                "Invalid outcome type. Outcome should be one of: BINARY, FREE_RESPONSE, PSEUDO_NUMERIC, MULTIPLE_CHOICE"
             )
 
         response = requests.post(
