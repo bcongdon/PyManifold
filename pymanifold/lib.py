@@ -4,7 +4,7 @@ from typing import Any, Dict, Iterable, Optional, List, Sequence, Tuple, Union
 
 import requests
 
-from .types import Bet, Market, LiteMarket
+from .types import Bet, LiteUser, Market, LiteMarket
 
 BASE_URI = "https://manifold.markets/api/v0"
 
@@ -104,13 +104,29 @@ class ManifoldClient:
 
     def get_market_by_id(self, market_id: str) -> Market:
         """Get a market by id."""
+        return Market.from_dict(self._get_market_by_id_raw(market_id))
+
+    def _get_market_by_id_raw(self, market_id: str) -> Dict[str, Any]:
+        """Get a market by id."""
         response = requests.get(url=BASE_URI + "/market/" + market_id)
-        return Market.from_dict(response.json())
+        return response.json()
 
     def get_market_by_slug(self, slug: str) -> Market:
         """Get a market by slug."""
+        return Market.from_dict(self._get_market_by_slug_raw(slug))
+
+    def _get_market_by_slug_raw(self, slug: str) -> Dict[str, Any]:
+        """Get a market by slug."""
         response = requests.get(url=BASE_URI + "/slug/" + slug)
-        return Market.from_dict(response.json())
+        return response.json()
+
+    def get_user(self, handle: str) -> LiteUser:
+        """Get a user by handle."""
+        return LiteUser.from_dict(self._get_user_raw(handle))
+
+    def _get_user_raw(self, handle: str) -> Dict[str, Any]:
+        response = requests.get(url=BASE_URI + "/user/" + handle)
+        return response.json()
 
     def _auth_headers(self) -> dict:
         if self.api_key:
