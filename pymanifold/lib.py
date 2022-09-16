@@ -314,13 +314,13 @@ class ManifoldClient:
             headers=self._auth_headers(),
         )
 
-    def _resolve_pseudo_numeric_market(self, market, resolutionValue: Tuple[float, float]):
+    def _resolve_pseudo_numeric_market(self, market, resolutionValue: float):
         if resolutionValue in (market.max, float('inf')):
             json: Dict[str, Union[float, str]] = {"outcome": "YES"}
         elif resolutionValue == market.min:
             json = {"outcome": "NO"}
         else:
-            json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
+            json = {"outcome": "MKT", "value": resolutionValue}
 
         return requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
