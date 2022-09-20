@@ -1,16 +1,18 @@
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, Optional, List
+from typing import Any, Dict, Iterable, Optional, List, Type, TypeVar
 import inspect
+
+T = TypeVar("T")
 
 
 class DictDeserializable:
     """An object which can be deserialized from a known dictionary spec."""
 
     @classmethod
-    def from_dict(cls, env):
+    def from_dict(cls: Type[T], env: Dict[str, Any]) -> T:
         """Take a dictionary and return an instance of the associated class."""
         return cls(
-            **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}
+            **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}  # type: ignore
         )
 
 
