@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, Iterable, Optional, List, Type, TypeVar
+from typing import Any, Dict, Iterable, Literal, Optional, List, Type, TypeVar
 import inspect
 
 T = TypeVar("T")
@@ -60,7 +60,7 @@ class LiteMarket(DictDeserializable):
     # description: str
     tags: List[str]
 
-    outcomeType: str  # BINARY, FREE_RESPONSE, NUMERIC, or PSEUDO_NUMERIC
+    outcomeType: Literal["BINARY", "FREE_RESPONSE", "NUMERIC", "PSEUDO_NUMERIC"]
     pool: float
     volume7Days: float
     volume24Hours: float
@@ -71,6 +71,7 @@ class LiteMarket(DictDeserializable):
     resolution: Optional[str] = None
 
     p: Optional[float] = None
+    totalLiquidity: Optional[float] = None
     min: Optional[float] = None
     max: Optional[float] = None
     isLogScale: Optional[bool] = None
