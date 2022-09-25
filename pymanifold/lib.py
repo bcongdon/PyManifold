@@ -315,13 +315,7 @@ class ManifoldClient:
         )
 
     def _resolve_pseudo_numeric_market(self, market, resolutionValue: Tuple[float, float]):
-        if resolutionValue in (market.max, float('inf')):
-            json: Dict[str, Union[float, str]] = {"outcome": "YES"}
-        elif resolutionValue == market.min:
-            json = {"outcome": "NO"}
-        else:
-            json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
-
+        json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
         return requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
             json=json,
@@ -346,8 +340,7 @@ class ManifoldClient:
             headers=self._auth_headers(),
         )
 
-    def _resolve_multiple_choice_market(self, market, weights: Dict[int, float]):
-        return self._resolve_free_response_market(market, weights)
+    _resolve_multiple_choice_market = _resolve_free_response_market
 
     def _resolve_numeric_market(self, market, number: float):
         raise NotImplementedError("TODO: I suspect the relevant docs are out of date")
