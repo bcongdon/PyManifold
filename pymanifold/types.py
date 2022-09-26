@@ -1,8 +1,13 @@
-from dataclasses import dataclass, field
-from typing import Any, Dict, Iterable, Literal, Optional, List, Type, TypeVar
-import inspect
+from __future__ import annotations
 
-T = TypeVar("T")
+from dataclasses import dataclass, field
+import inspect
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:  # pragma: no cover
+    from typing import Any, Dict, Iterable, Literal, Optional, List, Type, TypeVar
+
+    T = TypeVar("T")
 
 
 class DictDeserializable:

@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 from itertools import chain
 from math import inf
-from typing import Any, Dict, Iterable, Optional, List, Sequence, Tuple, Union
+from typing import TYPE_CHECKING
 
 import requests
 
 from .types import Bet, LiteUser, Market, LiteMarket
+
+if TYPE_CHECKING:  # pragma: no cover
+    from typing import Any, Dict, Iterable, Optional, List, Sequence, Tuple, Union
 
 BASE_URI = "https://manifold.markets/api/v0"
 
