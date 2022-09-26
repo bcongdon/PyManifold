@@ -66,9 +66,11 @@ class LiteMarket(DictDeserializable):
     volume24Hours: float
     isResolved: bool
     description: str = ""
+    lastUpdatedTime: Optional[int] = None
     probability: Optional[float] = None
     resolutionTime: Optional[int] = None
     resolution: Optional[str] = None
+    resolutionProbability: Optional[float] = None
 
     p: Optional[float] = None
     totalLiquidity: Optional[float] = None
