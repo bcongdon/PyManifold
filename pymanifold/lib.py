@@ -125,6 +125,16 @@ class ManifoldClient:
         response = requests.get(url=BASE_URI + "/slug/" + slug)
         return response.json()
 
+    def get_market_by_url(self, url: str) -> Market:
+        """Get a market by url."""
+        return Market.from_dict(self._get_market_by_url_raw(url))
+
+    def _get_market_by_url_raw(self, url: str) -> Dict[str, Any]:
+        """Get a market by url."""
+        slug = url.split("/")[-1].split("#")[0]
+        response = requests.get(url=BASE_URI + "/slug/" + slug)
+        return response.json()
+
     def get_user(self, handle: str) -> LiteUser:
         """Get a user by handle."""
         return LiteUser.from_dict(self._get_user_raw(handle))
