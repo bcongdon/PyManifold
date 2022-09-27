@@ -145,13 +145,15 @@ class ManifoldClient:
             marketId = market.id
         else:
             marketId = market
-        return requests.post(
+        response = requests.post(
             url=BASE_URI + "/market/" + marketId + "/resolve",
             json={
                 "outcome": "CANCEL",
             },
             headers=self._auth_headers(),
         )
+        response.raise_for_status()
+        return response
 
     def create_bet(self, contractId: str, amount: int, outcome: str, limitProb: Optional[float] = None) -> str:
         """Place a bet.
@@ -170,8 +172,7 @@ class ManifoldClient:
             json=json,
             headers=self._auth_headers(),
         )
-        if response.status_code >= 400:
-            raise RuntimeError(response.status_code, response.reason, response.url, response.text)
+        response.raise_for_status()
         return response.json()["betId"]
 
     def create_free_response_market(
@@ -282,9 +283,8 @@ class ManifoldClient:
             headers=self._auth_headers(),
         )
         if response.status_code in range(400, 500):
-            raise RuntimeError(response.status_code, response.reason, response.url, response.text)
+            response.raise_for_status()
         elif response.status_code >= 500:
-            breakpoint()
             for mkt in self.list_markets():
                 if (question, outcomeType, closeTime) == (mkt.question, mkt.outcomeType, mkt.closeTime):
                     return mkt
@@ -313,19 +313,23 @@ class ManifoldClient:
         else:
             json = {"outcome": "MKT", "probabilityInt": probabilityInt}
 
-        return requests.post(
+        response = requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
             json=json,
             headers=self._auth_headers(),
         )
+        response.raise_for_status()
+        return response
 
     def _resolve_pseudo_numeric_market(self, market, resolutionValue: Tuple[float, float]):
         json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
-        return requests.post(
+        response = requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
             json=json,
             headers=self._auth_headers(),
         )
+        response.raise_for_status()
+        return response
 
     def _resolve_free_response_market(self, market, weights: Dict[int, float]):
         if len(weights) == 1:
@@ -339,11 +343,13 @@ class ManifoldClient:
                     for index, weight in weights.items()
                 ]
             }
-        return requests.post(
+        response = requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
             json=json,
             headers=self._auth_headers(),
         )
+        response.raise_for_status()
+        return response
 
     _resolve_multiple_choice_market = _resolve_free_response_market
 
