@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-import inspect
+from inspect import signature
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict, Iterable, Literal, Optional, List, Type, TypeVar
+    from typing import Any, Dict, Iterable, List, Literal, Optional, Type, TypeVar
 
     T = TypeVar("T")
 
@@ -17,7 +17,7 @@ class DictDeserializable:
     def from_dict(cls: Type[T], env: Dict[str, Any]) -> T:
         """Take a dictionary and return an instance of the associated class."""
         return cls(
-            **{k: v for k, v in env.items() if k in inspect.signature(cls).parameters}  # type: ignore
+            **{k: v for k, v in env.items() if k in signature(cls).parameters}  # type: ignore
         )
 
 

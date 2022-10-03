@@ -6,10 +6,10 @@ from typing import TYPE_CHECKING
 
 import requests
 
-from .types import Bet, LiteUser, Market, LiteMarket
+from .types import Bet, LiteMarket, LiteUser, Market
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict, Iterable, Optional, List, Sequence, Tuple, Union
+    from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 BASE_URI = "https://manifold.markets/api/v0"
 

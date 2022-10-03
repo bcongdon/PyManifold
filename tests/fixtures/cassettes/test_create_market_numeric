@@ -2,7 +2,8 @@ interactions:
 - request:
     body: '{"outcomeType": "NUMERIC", "question": "Testing Numeric Response Market
       creation through API", "description": "Going to resolves as N/A", "closeTime":
-      4102444800000, "tags": ["fun"], "min": 0, "max": 100}'
+      4102444800000, "tags": ["fun"], "min": 0, "max": 100 , "isLogScale": false,
+      "initialValue": 50}'
     headers:
       Accept:
       - '*/*'

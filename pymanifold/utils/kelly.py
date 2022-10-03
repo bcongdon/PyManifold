@@ -1,4 +1,6 @@
-from numpy import log as ln, argmax
+from numpy import argmax
+from numpy import log as ln
+
 
 def kelly_calc(market, subjective_prob, balance):
     """For a given binary market, find the bet that maximises expected log wealth."""
@@ -22,8 +24,6 @@ def kelly_calc(market, subjective_prob, balance):
 
         y += bet
         n += bet
-
-        k2 = y**p * n**(1-p)
 
         if outcome == "YES":
             y2 = (k / n**(1-p))**(1/p)
@@ -59,7 +59,6 @@ def kelly_calc(market, subjective_prob, balance):
 
         else:
             return "ERROR: Please give a valid outcome"
-
 
     def expected_log_wealth(market, sub_prob, bet, outcome, balance):
         """Calculate the expected log wealth for a hypothetical bet"""

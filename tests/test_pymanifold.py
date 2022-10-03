@@ -1,12 +1,15 @@
-from pymanifold import __version__, ManifoldClient
+from os import getenv
+from pathlib import Path
+
+from pymanifold import ManifoldClient, __version__
 from pymanifold.types import LiteMarket, Market
-import vcr
-import os
+from vcr import VCR
 
-API_KEY = os.getenv("MANIFOLD_API_KEY", "fake_api_key")
+API_KEY = getenv("MANIFOLD_API_KEY", "fake_api_key")
+LOCAL_FOLDER = str(Path(__file__).parent)
 
-manifold_vcr = vcr.VCR(
-    cassette_library_dir="tests/fixtures/cassettes",
+manifold_vcr = VCR(
+    cassette_library_dir=LOCAL_FOLDER + "/fixtures/cassettes",
     record_mode="once",
     match_on=["uri", "method"],
     filter_headers=["authorization"],
@@ -14,7 +17,7 @@ manifold_vcr = vcr.VCR(
 
 
 def test_version():
-    assert __version__ == "0.1.0"
+    assert __version__ == "0.2.0"
 
 
 @manifold_vcr.use_cassette()
@@ -101,6 +104,8 @@ def test_create_market_numeric():
         question="Testing Numeric Response Market creation through API",
         minValue=0,
         maxValue=100,
+        isLogScale=False,
+        initialValue=50,
         description="Going to resolves as N/A",
         tags=["fun"],
         closeTime=4102444800000,
