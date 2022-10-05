@@ -5,7 +5,9 @@ from inspect import signature
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict, Iterable, List, Literal, Optional, Type, TypeVar
+    from typing import Any, Dict, Iterable, List, Literal, Mapping, Optional, Type, TypeVar, Union
+
+    from .lib import ManifoldClient
 
     T = TypeVar("T")
 
@@ -65,8 +67,8 @@ class LiteMarket(DictDeserializable):
     # description: str
     tags: List[str]
 
-    outcomeType: Literal["BINARY", "FREE_RESPONSE", "NUMERIC", "PSEUDO_NUMERIC"]
-    pool: float
+    outcomeType: Literal["BINARY", "FREE_RESPONSE", "NUMERIC", "PSEUDO_NUMERIC", "MULTIPLE_CHOICE"]
+    pool: float | Mapping[str, float]
     volume7Days: float
     volume24Hours: float
     isResolved: bool
@@ -94,10 +96,10 @@ class Market(LiteMarket):
 
     bets: List[Bet] = field(default_factory=list)
     comments: List[Comment] = field(default_factory=list)
-    answers: Optional[Dict[str, str]] = None
+    answers: Optional[List[Dict[str, Union[str, float]]]] = None
 
     @classmethod
-    def from_dict(cls, env):
+    def from_dict(cls, env: dict[str, Any]) -> 'Market':
         """Take a dictionary and return an instance of the associated class."""
         market = super(Market, cls).from_dict(env)
         market.bets = [Bet.from_dict(bet) for bet in env["bets"]]
@@ -121,13 +123,13 @@ class Group(DictDeserializable):
     slug: str = ""
     about: str = ""
 
-    def contracts(self, client) -> Iterable[Market]:
+    def contracts(self, client: 'ManifoldClient') -> Iterable[Market]:
         """Iterate over the markets in this group."""
         return (client.get_market_by_id(id_) for id_ in self.contractIds)
 
-    def members(self, client) -> Iterable["LiteUser"]:
+    def members(self, client: 'ManifoldClient') -> Iterable["LiteUser"]:
         """Iterate over the users in this group."""
-        return (client.get_user_by_id(id_) for id_ in self.memberIds)
+        return (client.get_user(id_) for id_ in self.memberIds)
 
 
 class LiteUser(DictDeserializable):

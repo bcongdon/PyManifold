@@ -16,23 +16,24 @@ manifold_vcr = VCR(
 )
 
 
-def test_version():
+def test_version() -> None:
     assert __version__ == "0.2.0"
 
 
-@manifold_vcr.use_cassette()
-def test_list_markets():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_list_markets() -> None:
     client = ManifoldClient()
     markets = client.list_markets()
 
     for m in markets:
+        assert m.closeTime is not None
         assert m.closeTime > 0
         assert m.url
         assert m.id
 
 
-@manifold_vcr.use_cassette()
-def test_get_market_by_slug():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_get_market_by_slug() -> None:
     client = ManifoldClient()
 
     slug = "will-bitcoins-price-fall-below-25k"
@@ -42,8 +43,8 @@ def test_get_market_by_slug():
     validate_market(market)
 
 
-@manifold_vcr.use_cassette()
-def test_get_market_by_id():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_get_market_by_id() -> None:
     client = ManifoldClient()
 
     id = "rIR6mWqaO9xKLifr6cLL"
@@ -58,22 +59,22 @@ def test_get_market_by_id():
     validate_market(market)
 
 
-@manifold_vcr.use_cassette()
-def test_create_bet_binary():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_create_bet_binary() -> None:
     client = ManifoldClient(api_key=API_KEY)
     betId = client.create_bet(contractId="BxFQCoaaxBqRcnzJb1mV", amount=1, outcome="NO")
     assert betId == "ZhwL5DngCKdrZ7TQQFad"
 
 
-@manifold_vcr.use_cassette()
-def test_create_bet_free_response():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_create_bet_free_response() -> None:
     client = ManifoldClient(api_key=API_KEY)
     betId = client.create_bet(contractId="Hbeirep6H6GXHFNiX6M1", amount=1, outcome="4")
     assert betId == "8qgMoiHYfQlvkuyd3NRa"
 
 
-@manifold_vcr.use_cassette()
-def test_create_market_binary():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_create_market_binary() -> None:
     client = ManifoldClient(api_key=API_KEY)
     market = client.create_binary_market(
         question="Testing Binary Market creation through API",
@@ -85,8 +86,8 @@ def test_create_market_binary():
     validate_lite_market(market)
 
 
-@manifold_vcr.use_cassette()
-def test_create_market_free_response():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_create_market_free_response() -> None:
     client = ManifoldClient(api_key=API_KEY)
     market = client.create_free_response_market(
         question="Testing Free Response Market creation through API",
@@ -97,8 +98,8 @@ def test_create_market_free_response():
     validate_lite_market(market)
 
 
-@manifold_vcr.use_cassette()
-def test_create_market_numeric():
+@manifold_vcr.use_cassette()  # type: ignore
+def test_create_market_numeric() -> None:
     client = ManifoldClient(api_key=API_KEY)
     market = client.create_numeric_market(
         question="Testing Numeric Response Market creation through API",
@@ -113,14 +114,14 @@ def test_create_market_numeric():
     validate_lite_market(market)
 
 
-def validate_lite_market(market: LiteMarket):
+def validate_lite_market(market: LiteMarket) -> None:
     assert market.id
     assert market.creatorUsername
     assert market.question
     assert market.description
 
 
-def validate_market(market: Market):
+def validate_market(market: Market) -> None:
     validate_lite_market(market)
 
     for b in market.bets:
