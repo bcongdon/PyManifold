@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from itertools import chain
 from math import inf
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, cast
 
 import requests
 
 from .types import Bet, LiteMarket, LiteUser, Market
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple, Union
+    from typing import Iterable, List, Optional, Sequence, Tuple, Union
 
 BASE_URI = "https://manifold.markets/api/v0"
 
@@ -20,9 +20,11 @@ class ManifoldClient:
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key
 
-    def list_markets(self, *args, **kwargs) -> List[LiteMarket]:
+    def list_markets(
+        self, limit: Optional[int] = None, before: Optional[str] = None
+    ) -> List[LiteMarket]:
         """List all markets."""
-        return list(self.get_markets(*args, **kwargs))
+        return list(self.get_markets(limit, before))
 
     def get_markets(
         self, limit: Optional[int] = None, before: Optional[str] = None
@@ -60,9 +62,15 @@ class ManifoldClient:
             least_recent = new_least_recent
             most_recent = new_most_recent
 
-    def list_bets(self, *args, **kwargs) -> List[Bet]:
+    def list_bets(
+        self,
+        limit: Optional[int] = None,
+        before: Optional[str] = None,
+        username: Optional[str] = None,
+        market: Optional[str] = None,
+    ) -> List[Bet]:
         """List all bets."""
-        return list(self.get_bets(*args, **kwargs))
+        return list(self.get_bets(limit, before, username, market))
 
     def get_bets(
         self,
@@ -114,7 +122,7 @@ class ManifoldClient:
     def _get_market_by_id_raw(self, market_id: str) -> Dict[str, Any]:
         """Get a market by id."""
         response = requests.get(url=BASE_URI + "/market/" + market_id)
-        return response.json()
+        return cast(Dict[str, Any], response.json())
 
     def get_market_by_slug(self, slug: str) -> Market:
         """Get a market by slug."""
@@ -123,7 +131,7 @@ class ManifoldClient:
     def _get_market_by_slug_raw(self, slug: str) -> Dict[str, Any]:
         """Get a market by slug."""
         response = requests.get(url=BASE_URI + "/slug/" + slug)
-        return response.json()
+        return cast(Dict[str, Any], response.json())
 
     def get_market_by_url(self, url: str) -> Market:
         """Get a market by url."""
@@ -133,7 +141,7 @@ class ManifoldClient:
         """Get a market by url."""
         slug = url.split("/")[-1].split("#")[0]
         response = requests.get(url=BASE_URI + "/slug/" + slug)
-        return response.json()
+        return cast(Dict[str, Any], response.json())
 
     def get_user(self, handle: str) -> LiteUser:
         """Get a user by handle."""
@@ -141,15 +149,15 @@ class ManifoldClient:
 
     def _get_user_raw(self, handle: str) -> Dict[str, Any]:
         response = requests.get(url=BASE_URI + "/user/" + handle)
-        return response.json()
+        return cast(Dict[str, Any], response.json())
 
-    def _auth_headers(self) -> dict:
+    def _auth_headers(self) -> dict[str, str]:
         if self.api_key:
             return {"Authorization": "Key " + self.api_key}
         else:
             raise RuntimeError("No API key provided")
 
-    def cancel_market(self, market: Union[LiteMarket, str]):
+    def cancel_market(self, market: Union[LiteMarket, str]) -> requests.Response:
         """Cancel a market, resolving it N/A."""
         if isinstance(market, LiteMarket):
             marketId = market.id
@@ -183,7 +191,7 @@ class ManifoldClient:
             headers=self._auth_headers(),
         )
         response.raise_for_status()
-        return response.json()["betId"]
+        return cast(str, response.json()["betId"])
 
     def create_free_response_market(
         self,
@@ -191,7 +199,7 @@ class ManifoldClient:
         description: str,
         closeTime: int,
         tags: Optional[List[str]] = None,
-    ):
+    ) -> LiteMarket:
         """Create a free response market."""
         return self._create_market(
             "FREE_RESPONSE", question, description, closeTime, tags
@@ -204,7 +212,7 @@ class ManifoldClient:
         closeTime: int,
         answers: List[str],
         tags: Optional[List[str]] = None,
-    ):
+    ) -> LiteMarket:
         """Create a free response market."""
         return self._create_market(
             "MULTIPLE_CHOICE", question, description, closeTime, tags, answers=answers
@@ -220,7 +228,7 @@ class ManifoldClient:
         isLogScale: bool,
         initialValue: Optional[float] = None,
         tags: Optional[List[str]] = None,
-    ):
+    ) -> LiteMarket:
         """Create a numeric market."""
         return self._create_market(
             "PSEUDO_NUMERIC",
@@ -241,7 +249,7 @@ class ManifoldClient:
         closeTime: int,
         tags: Optional[List[str]] = None,
         initialProb: Optional[int] = 50,
-    ):
+    ) -> LiteMarket:
         """Create a binary market."""
         return self._create_market(
             "BINARY", question, description, closeTime, tags, initialProb=initialProb
@@ -260,7 +268,7 @@ class ManifoldClient:
         maxValue: Optional[int] = None,
         isLogScale: Optional[bool] = None,
         answers: Optional[Sequence[str]] = None,
-    ):
+    ) -> LiteMarket:
         """Create a market."""
         data = {
             "outcomeType": outcomeType,
@@ -300,7 +308,7 @@ class ManifoldClient:
                     return mkt
         return LiteMarket.from_dict(response.json())
 
-    def resolve_market(self, market: Union[LiteMarket, str], *args, **kwargs):
+    def resolve_market(self, market: Union[LiteMarket, str], *args: Any, **kwargs: Any) -> requests.Response:
         """Resolve a market, with different inputs depending on its type."""
         if not isinstance(market, LiteMarket):
             market = self.get_market_by_id(market)
@@ -315,7 +323,7 @@ class ManifoldClient:
         else:
             raise NotImplementedError()
 
-    def _resolve_binary_market(self, market, probabilityInt: float):
+    def _resolve_binary_market(self, market: LiteMarket, probabilityInt: float) -> requests.Response:
         if probabilityInt == 100 or probabilityInt is True:
             json: Dict[str, Union[float, str]] = {"outcome": "YES"}
         elif probabilityInt == 0 or probabilityInt is False:
@@ -331,7 +339,9 @@ class ManifoldClient:
         response.raise_for_status()
         return response
 
-    def _resolve_pseudo_numeric_market(self, market, resolutionValue: Tuple[float, float]):
+    def _resolve_pseudo_numeric_market(
+        self, market: LiteMarket, resolutionValue: Tuple[float, float]
+    ) -> requests.Response:
         json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
         response = requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
@@ -341,7 +351,7 @@ class ManifoldClient:
         response.raise_for_status()
         return response
 
-    def _resolve_free_response_market(self, market, weights: Dict[int, float]):
+    def _resolve_free_response_market(self, market: LiteMarket, weights: Dict[int, float]) -> requests.Response:
         if len(weights) == 1:
             json: Dict[str, Any] = {"outcome": next(iter(weights))}
         else:
@@ -363,5 +373,5 @@ class ManifoldClient:
 
     _resolve_multiple_choice_market = _resolve_free_response_market
 
-    def _resolve_numeric_market(self, market, number: float):
+    def _resolve_numeric_market(self, market: LiteMarket, number: float) -> requests.Response:
         raise NotImplementedError("TODO: I suspect the relevant docs are out of date")
