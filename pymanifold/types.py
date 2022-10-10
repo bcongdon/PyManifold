@@ -68,7 +68,7 @@ class LiteMarket(DictDeserializable):
     tags: List[str]
 
     outcomeType: Literal["BINARY", "FREE_RESPONSE", "NUMERIC", "PSEUDO_NUMERIC", "MULTIPLE_CHOICE"]
-    pool: float | Mapping[str, float]
+    pool: float | Mapping[str, float] | None
     volume7Days: float
     volume24Hours: float
     isResolved: bool
@@ -88,6 +88,12 @@ class LiteMarket(DictDeserializable):
     # This should not be optional, once market creation returns the URL in the response.
     # https://github.com/manifoldmarkets/manifold/issues/508
     url: Optional[str] = None
+
+    @property
+    def slug(self) -> str:
+        if self.url is None:
+            raise ValueError("No url set")
+        return self.url.split("/")[-1]
 
 
 @dataclass
@@ -132,6 +138,7 @@ class Group(DictDeserializable):
         return (client.get_user(id_) for id_ in self.memberIds)
 
 
+@dataclass
 class LiteUser(DictDeserializable):
     """Basic information about a user."""
 
