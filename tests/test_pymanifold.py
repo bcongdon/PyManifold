@@ -1,9 +1,17 @@
+from __future__ import annotations
+
 from os import getenv
 from pathlib import Path
+from typing import TYPE_CHECKING, Mapping
 
 from pymanifold import ManifoldClient, __version__
-from pymanifold.types import LiteMarket, Market
+from pymanifold.types import Market
 from vcr import VCR
+
+if TYPE_CHECKING:
+    from typing import Any
+
+    from pymanifold.types import Bet, LiteMarket, LiteUser
 
 API_KEY = getenv("MANIFOLD_API_KEY", "fake_api_key")
 LOCAL_FOLDER = str(Path(__file__).parent)
@@ -14,6 +22,12 @@ manifold_vcr = VCR(
     match_on=["uri", "method"],
     filter_headers=["authorization"],
 )
+
+get_bet_params: list[dict[str, Any]] = [
+    {'username': 'LivInTheLookingGlass'},
+    {'market': 'will-bitcoins-price-fall-below-25k'},
+    {}
+]
 
 
 def test_version() -> None:
@@ -26,10 +40,66 @@ def test_list_markets() -> None:
     markets = client.list_markets()
 
     for m in markets:
-        assert m.closeTime is not None
-        assert m.closeTime > 0
-        assert m.url
-        assert m.id
+        validate_lite_market(m)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_get_markets() -> None:
+    client = ManifoldClient()
+    markets = client.get_markets()
+
+    for m in markets:
+        validate_lite_market(m)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_get_user() -> None:
+    client = ManifoldClient()
+    for username in ["v", "LivInTheLookingGlass"]:
+        user = client.get_user(username)
+        validate_lite_user(user)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_list_bets() -> None:
+    client = ManifoldClient()
+    limit = 45
+    kwargs: dict[str, Any]
+    for kwargs in get_bet_params:
+        key = '-'.join(kwargs) or 'none'
+        with manifold_vcr.use_cassette(f'test_list_bet/{key}.yaml'):
+            bets = client.list_bets(limit=limit, **kwargs)
+
+            for idx, b in enumerate(bets):
+                assert idx < limit
+                validate_bet(b)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_get_bets() -> None:
+    client = ManifoldClient()
+    limit = 45
+    for kwargs in get_bet_params:
+        key = '-'.join(kwargs) or 'none'
+        with manifold_vcr.use_cassette(f'test_get_bet/{key}.yaml'):
+            bets = client.get_bets(limit=limit, **kwargs)
+
+            for idx, b in enumerate(bets):
+                assert idx < limit
+                validate_bet(b)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_get_market_by_url() -> None:
+    client = ManifoldClient()
+
+    slug = "will-bitcoins-price-fall-below-25k"
+    url = "https://manifold.markets/bcongdon/" + slug
+    market = client.get_market_by_url(url)
+    assert market.slug == slug
+    assert market.id == "rIR6mWqaO9xKLifr6cLL"
+    assert market.url == url
+    validate_market(market)
 
 
 @manifold_vcr.use_cassette()  # type: ignore
@@ -38,6 +108,7 @@ def test_get_market_by_slug() -> None:
 
     slug = "will-bitcoins-price-fall-below-25k"
     market = client.get_market_by_slug("will-bitcoins-price-fall-below-25k")
+    assert market.slug == slug
     assert market.id == "rIR6mWqaO9xKLifr6cLL"
     assert market.url == "https://manifold.markets/bcongdon/" + slug
     validate_market(market)
@@ -49,6 +120,7 @@ def test_get_market_by_id() -> None:
 
     id = "rIR6mWqaO9xKLifr6cLL"
     market = client.get_market_by_id(id)
+    assert market.slug == "will-bitcoins-price-fall-below-25k"
     assert market.id == id
     assert (
         market.url
@@ -99,6 +171,19 @@ def test_create_market_free_response() -> None:
 
 
 @manifold_vcr.use_cassette()  # type: ignore
+def test_create_market_multiple_choice() -> None:
+    client = ManifoldClient(api_key=API_KEY)
+    market = client.create_multiple_choice_market(
+        question="Testing Multiple Choice creation through API",
+        description="Going to resolves as N/A",
+        tags=["fun"],
+        closeTime=5102444800000,
+        answers=["sounds good", "alright", "I don't care"]
+    )
+    validate_lite_market(market)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
 def test_create_market_numeric() -> None:
     client = ManifoldClient(api_key=API_KEY)
     market = client.create_numeric_market(
@@ -109,7 +194,7 @@ def test_create_market_numeric() -> None:
         initialValue=50,
         description="Going to resolves as N/A",
         tags=["fun"],
-        closeTime=4102444800000,
+        closeTime=5102444800000,
     )
     validate_lite_market(market)
 
@@ -118,7 +203,16 @@ def validate_lite_market(market: LiteMarket) -> None:
     assert market.id
     assert market.creatorUsername
     assert market.question
-    assert market.description
+    # assert market.description
+    assert market.outcomeType in ["BINARY", "FREE_RESPONSE", "NUMERIC", "PSEUDO_NUMERIC", "NUMERIC", "MULTIPLE_CHOICE"]
+    assert market.pool is None or isinstance(market.pool, (int, float, Mapping))
+    assert all(
+        hasattr(market, attr) for attr in [
+            'description', 'creatorAvatarUrl', 'tags', 'volume7Days', 'volume24Hours', 'isResolved', 'lastUpdatedTime',
+            'probability', 'resolutionTime', 'resolution', 'resolutionProbability', 'p', 'totalLiquidity', 'min',
+            'max', 'isLogScale'
+        ]
+    )
 
 
 def validate_market(market: Market) -> None:
@@ -136,3 +230,25 @@ def validate_market(market: Market) -> None:
         assert c.userId
         assert c.userName
         assert c.userUsername
+
+
+def validate_bet(bet: Bet) -> None:
+    # assert bet.amount
+    assert bet.contractId
+    assert bet.createdTime
+    assert bet.id
+    assert hasattr(bet, 'amount')
+
+
+def validate_lite_user(user: LiteUser) -> None:
+    assert user.id
+    assert user.createdTime
+    assert user.name
+    assert user.username
+    assert user.url
+    assert all(
+        hasattr(user, attr) for attr in [
+            'avatarUrl', 'bio', 'bannerUrl', 'website', 'twitterHandle', 'discordHandle', 'balance', 'totalDeposits',
+            'totalPnLCached', 'creatorVolumeCached'
+        ]
+    )

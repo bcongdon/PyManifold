@@ -1,0 +1,65 @@
+interactions:
+- request:
+    body: '{"outcomeType": "MULTIPLE_CHOICE", "question": "Testing Multiple Choice
+      creation through API", "description": "Going to resolves as N/A", "closeTime":
+      5102444800000, "tags": ["fun"], "answers": ["sounds good", "alright", "I don''t
+      care"]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '237'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/market
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6xT2W6jMBT9FWRp5imEPUCkapSmy0RK26il1SyqRgZccGO41Dbppvz7XCBNNVIe
+        Bx6Mz118Oef4nfCcTInD/Cg40UGbrJ/fYs/VN+UdGREl2gKjminN68KsWqF5I5iZlcAzXCSjmkNt
+        6hKTK5aVtOaqwoq8qUwXMWh1BhVLXhuG6MXtMlmslqd/5t+vFvNTjDcAgkzfiU2mnjf2/nkmI+Ic
+        ht1D8HZENGgqbkoqmdo1DcJx6AW2O4mdKJ64QRj0TQ/B7iH4o+kx0+r/zUlr9cwkNvx9PyI9iSAX
+        nQxrx5u9/fSqNvqRPLbey/WvO28VPR0/ns47Nnepl7Tq2LwSfMPpJ3yrmKyH0JJvFnVSsiXAGoU7
+        F1Spz8TZhmoqbyUyT0qtGzW1rAcuWUoVCg2SFmxcABSC0YarMQpobWwrtSpaa56ZFZVrpGNMm0Y1
+        oPs4WC2ebvIKa9UX9+zQAAivHMe1Xd8bPzbFNyr0UcVyTr9qWLP6KExTP4gYNaM0jkzf81IzDn1m
+        +r4d+nGYxnkc4k88tZ0bocbhk8GXxsXOl8a896Xx4UtDlxLaojRmqwVW5kxlkjdD8TvRgylzyDpq
+        oNas1ijJPtBQZELSpjwc1uxFY6RfpuQcukE0GOg9EBumDKqMS2tGtvf4YhotdnoLQO0zpDrZQxuu
+        eMoF16/dsW0qeDcSV9dDL3TGAxWK7QRkecI7lZ3JJPDd2HVt20X/ZgKwZx8JHCTZ9yO7e7A9iLaD
+        95+u/x3azn97JDyhr8OeoVSocj+LPe4uRgZCsAyPPWPDvdrZCLd9heBPLc+x4ANoBNUPIKthv93+
+        BQAA//8DAHmEg5dkBAAA
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Oct 2022 19:13:40 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/market
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::f5729-1665429219671-f399f364a5de
+    status:
+      code: 200
+      message: OK
+version: 1
