@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Mapping
 
 from pymanifold import ManifoldClient, __version__
-from pymanifold.types import Market
+from pymanifold.types import Group, Market
 from vcr import VCR
 
 if TYPE_CHECKING:
@@ -50,6 +50,27 @@ def test_get_markets() -> None:
 
     for m in markets:
         validate_lite_market(m)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_list_groups() -> None:
+    client = ManifoldClient()
+    groups = client.list_groups()
+
+    for g in groups:
+        validate_group(g)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_get_groups() -> None:
+    client = ManifoldClient()
+    groups = client.get_groups()
+
+    for idx, g in enumerate(groups):
+        validate_group(g)
+        if idx < 50:  # for the sake of time
+            validate_group(client.get_group(slug=g.slug))
+            validate_group(client.get_group(id_=g.id))
 
 
 @manifold_vcr.use_cassette()  # type: ignore
@@ -252,3 +273,21 @@ def validate_lite_user(user: LiteUser) -> None:
             'totalPnLCached', 'creatorVolumeCached'
         ]
     )
+
+
+def validate_group(group: Group) -> None:
+    assert group.name
+    assert group.creatorId
+    assert group.id
+    assert group.mostRecentActivityTime
+    assert group.mostRecentContractAddedTime
+    assert group.createdTime
+    assert group.slug
+
+    client = ManifoldClient()
+    
+    for contract in group.contracts(client):
+        validate_market(contract)
+
+    for member in group.members(client):
+        validate_lite_user(member)

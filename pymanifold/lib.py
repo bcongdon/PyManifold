@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Any, Dict, cast
 
 import requests
 
-from .types import Bet, LiteMarket, LiteUser, Market
+from .types import Bet, Group, LiteMarket, LiteUser, Market
 
 if TYPE_CHECKING:  # pragma: no cover
     from typing import Iterable, List, Optional, Sequence, Tuple, Union
@@ -32,6 +32,27 @@ class ManifoldClient:
             url=BASE_URI + "/markets", params={"limit": limit, "before": before}
         )
         return (LiteMarket.from_dict(market) for market in response.json())
+
+    def list_groups(self, availableToUserId: Optional[str] = None) -> List[Group]:
+        """List all markets."""
+        return list(self.get_groups(availableToUserId))
+
+    def get_groups(self, availableToUserId: Optional[str] = None) -> Iterable[Group]:
+        """Iterate over all markets."""
+        response = requests.get(
+            url=BASE_URI + "/groups", params={"availableToUserId": availableToUserId}
+        )
+        return (Group.from_dict(group) for group in response.json())
+
+    def get_group(self, slug: Optional[str] = None, id_: Optional[str] = None) -> Group:
+        """Iterate over all markets."""
+        if id_ is not None:
+            response = requests.get(url=BASE_URI + "/group/by-id/" + id_)
+        elif slug is not None:
+            response = requests.get(url=BASE_URI + "/group/" + slug)
+        else:
+            raise ValueError("Requires one or more of (slug, id_)")
+        return Group.from_dict(response.json())
 
     def list_bets(
         self,
