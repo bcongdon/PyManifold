@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from itertools import chain
-from math import inf
 from typing import TYPE_CHECKING, Any, Dict, cast
 
 import requests
@@ -35,33 +33,6 @@ class ManifoldClient:
         )
         return (LiteMarket.from_dict(market) for market in response.json())
 
-    def stream_markets(
-        self,
-        limit: Optional[int] = None,
-        before: Optional[str] = None,
-    ) -> Iterable[LiteMarket]:
-        """Iterate over all markets, including new ones."""
-        most_recent = new_most_recent = 0
-        least_recent = new_least_recent = inf
-        least_recent_id = before
-        while True:
-            candidates: Iterable[LiteMarket] = self.get_markets(limit=limit, before=least_recent_id)
-            if before is None:
-                candidates = chain(candidates, self.get_markets(limit=limit))
-            candidate: LiteMarket
-            idx = 0
-            for idx, candidate in enumerate(candidates):
-                if candidate.createdTime < most_recent or candidate.createdTime > least_recent:
-                    new_most_recent = max(new_most_recent, candidate.createdTime)
-                    new_least_recent = max(new_least_recent, candidate.createdTime)
-                    if candidate.createdTime == new_least_recent:
-                        least_recent_id = candidate.id
-                    yield candidate
-            if not idx:
-                break
-            least_recent = new_least_recent
-            most_recent = new_most_recent
-
     def list_bets(
         self,
         limit: Optional[int] = None,
@@ -84,36 +55,6 @@ class ManifoldClient:
             url=BASE_URI + "/bets", params={"limit": limit, "before": before, "username": username, "market": market}
         )
         return (Bet.from_dict(market) for market in response.json())
-
-    def stream_bets(
-        self,
-        limit: Optional[int] = None,
-        before: Optional[str] = None,
-        username: Optional[str] = None,
-        market: Optional[str] = None,
-    ) -> Iterable[Bet]:
-        """Iterate over all bets, including new ones."""
-        most_recent = new_most_recent = 0
-        least_recent = new_least_recent = inf
-        least_recent_id = before
-        while True:
-            candidates: Iterable[Bet] = self.get_bets(
-                limit=limit, before=least_recent_id, username=username, market=market
-            )
-            if before is None:
-                candidates = chain(candidates, self.get_bets(limit=limit, username=username, market=market))
-            candidate: Bet
-            for idx, candidate in enumerate(candidates):
-                if candidate.createdTime < most_recent or candidate.createdTime > least_recent:
-                    new_most_recent = max(new_most_recent, candidate.createdTime)
-                    new_least_recent = max(new_least_recent, candidate.createdTime)
-                    if candidate.createdTime == new_least_recent:
-                        least_recent_id = candidate.id
-                    yield candidate
-            if not idx:
-                break
-            least_recent = new_least_recent
-            most_recent = new_most_recent
 
     def get_market_by_id(self, market_id: str) -> Market:
         """Get a market by id."""
