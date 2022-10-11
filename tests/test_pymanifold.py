@@ -315,7 +315,7 @@ def validate_group(group: Group) -> None:
     assert group.slug
 
     client = ManifoldClient()
-    
+
     for contract in group.contracts(client):
         validate_market(contract)
 
