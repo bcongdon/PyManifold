@@ -1,0 +1,127 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://manifold.markets/api/v0/market/l6jsJPhOWSztXtzqhpU7
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA7xUbW/bOAz+K4OAu0+x43dbAYZDuqW9FF1bpM263lAcZJtJ1MiWI8lBkyD//Wg7
+        Sbut2MczYECiSOohn4faEZ6TARHRs768Xdw83G3NN7NdLappTHokU8CMVOPGZen6w+2jX9TJt/vn
+        2n+Z/PPVv01WZ8+jT96r61SDKlkBGHDF1+PyfgFXUi55Ob8QTOtXx+vO6UbwNWdHM+T3vDG7URSG
+        XhR6Do3iU8hwzQxTUyUwbmFMpQf9/owrSJkGjedsDvZcyrkAVnFtZ7Lor51+2i9YaXhmFUwtwWib
+        VZWupGnPZb9GwBYvMFb/4Z2/hxnNt67rOV7g28/V/C8mzMcCcs7+NHIJ5cc4TYMwAWYlKU2swPdT
+        i8YBWEHgxAGNU5rTtpdCajiVF7mhSwMHvx5Z1QifyxLLMrj6kPKSqc2HDi9GGjbXZPD9qUfqH2rH
+        uvhMitw+VNZ/D32/SWl1Ka1TykpKzLQjj6M7MqDUdqPAd1zXSaI4cqMeub5BlI5ruyFWgQdJGMeu
+        v8dAJVOWcsHNhgwcO3SwwhA9PD8OIy9Ah86MXxxFlAahk8Qe1iANE1d8VfO8DcV+9oisDZIA95uq
+        kcLZ+Ho4eURwBWQLLE0XaMyqorBcNK6lqNveHZfxZ7bBtjjHvRf8LWvVWbiegJZiDSjcGRMaegR7
+        YaZV/ovG4sSNEgSIQAoozaHRKbSrHWb6xMoMhHiTKpOlUSwz499MTtOn4cyAer9LjeoOEzAsDVL/
+        /gAguDAMO/f/Qf0tlFuGJJW40wC5R93wX4faVfmr7gOP+TSLQsvzPGYFsxAsymapBQ4AzSFJsjwh
+        HfY3r0LGjeIlN6x5Cw4CQHMjxB5hhaxL05IsJCuHh23DaNPrIdxMRpfD6k6/bO82C7WZPlw2WVSO
+        7XkNbW5suUlGDxfnF1++bJNJthxfb8aC0YyNVo9z6h04OoOZVNCS1CMzLkRHe8FMtoD8DFqSy1qI
+        HtELpgCPXZtSxzn9se/9ANwggdqwovqJxf3T71Nwfc47mRlVo8pm0HjuiDgOzTlA24rDa3jcVoIZ
+        rKHo9vvmmhx0pnjVvSk7Yrr5ymVGOvFCA/X76aBiKB7FqgXZP+GIG3gxn99mIGT/HwAAAP//AwB2
+        fMceJwYAAA==
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '0'
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 22:22:46 GMT
+      Etag:
+      - W/"tqdw6zjwgh17r"
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      X-Matched-Path:
+      - /api/v0/market/[id]
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::wshvs-1665526966530-9766bbfa9165
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"outcome": "YES"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '18'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/market/l6jsJPhOWSztXtzqhpU7/resolve
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2yTbW/aMBDHv0plaXuVQJ4fkKqp7WjH1FJEYR2r9sJJ3GBwYmM7dAHx3XdJAK1a
+        eRN8l9z9/78779ErZ4y/EXnDq1KjgWOgVBKsSTajBUEDOwh83wl8x4qD0EBbzqo2bCAheYIGvmWg
+        qqSbilwTrfmpDOQzolJJhaa8RIM9SnmpSZN62SNdC6iBBJY4l1gs0eG3cQpmPEUHEMG4Iu8kQH/L
+        9o7yuBzjJoceGd1SjAxEMzixYKW+T5aPz087/VPvNksxDyHHsNIg7125MLJ93z85Cr/iWqEBmEmB
+        B0nB/y0hqhXe9YNjm2fglWZU16eAYFi/cll058N7HKMMarygaPh8d3v38LCLpul6NK5HDMcpHm4W
+        eewg8L6liiaUQdUGS5UwmoJsXumUF2TWgbkeja+mC3RS7HjfeCU7ze0AUwzAcN70g4qgQHXokYZ/
+        FwktsawvCizXREORgqRLXFJVwAupKArTRme0c0Vk2eG9p9tROVuSe87XtMzvgKQ6Ap2L7L81AahB
+        BCtES6opZhNYEXzyZfWAtj4LpGpKFGdbAnPTsiLdQt2AqLzj/kbIunWX4bp9FrBByw6xqhJFs3rC
+        Oetm0Ja34BcGQRx7vhWFIIM0Oml6bO9GZ4ejZlnWtnu1W7hFFf2crSr3z/TXD3cSba5XwxsHPCpW
+        5Ud6ZkfPPNMTbeM9Wgyf0CCOe3bguZZtW1EQBnZgoPEjILHsnu17ngWJyA9D2z2c+19tscZyLqEI
+        Wmot1KDff6WSJDBDBXmck17Oec4IFlT1YAv6W6uf9Atcgp+jDtXDQijBdZvn/QrGZtICvlWfnNuP
+        JgfhiW07luO5vZXIv2CmLwuSUfxZ8zUpL8Mk8fyIYDNK4sj0XDcx49AjJpgIvThM4ixurpPmGrP7
+        0z0Apw6MQDbTrI4r13D5N/TBRT78BQAA//8DALqyogR7BAAA
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 22:22:48 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/market/[id]/resolve
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::pv76f-1665526966687-8c788fbc4c67
+    status:
+      code: 200
+      message: OK
+version: 1

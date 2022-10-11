@@ -5,9 +5,10 @@ from typing import TYPE_CHECKING, Any, Dict, cast
 import requests
 
 from .types import Bet, Group, LiteMarket, LiteUser, Market
+from .utils.math import number_to_prob_cpmm1
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Iterable, List, Optional, Sequence, Tuple, Union
+    from typing import Iterable, List, Optional, Sequence, Union
 
 BASE_URI = "https://manifold.markets/api/v0"
 
@@ -302,9 +303,12 @@ class ManifoldClient:
         return response
 
     def _resolve_pseudo_numeric_market(
-        self, market: LiteMarket, resolutionValue: Tuple[float, float]
+        self, market: LiteMarket, resolutionValue: float
     ) -> requests.Response:
-        json = {"outcome": "MKT", "value": resolutionValue[0], "probabilityInt": resolutionValue[1]}
+        assert market.min is not None
+        assert market.max is not None
+        prob = 100 * number_to_prob_cpmm1(resolutionValue, market.min, market.max, bool(market.isLogScale))
+        json = {"outcome": "MKT", "value": resolutionValue, "probabilityInt": prob}
         response = requests.post(
             url=BASE_URI + "/market/" + market.id + "/resolve",
             json=json,

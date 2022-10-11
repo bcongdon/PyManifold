@@ -223,7 +223,7 @@ def test_create_market_numeric() -> None:
 @manifold_vcr.use_cassette()  # type: ignore
 def test_resolve_market_binary() -> None:
     client = ManifoldClient(api_key=API_KEY)
-    client.resolve_market('sSQYM2QLJBIoQcxZQB8J', 100)
+    client.resolve_market('l6jsJPhOWSztXtzqhpU7', 100)
 
 
 @manifold_vcr.use_cassette()  # type: ignore
@@ -234,12 +234,14 @@ def test_resolve_market_free_resonse() -> None:
 
 @manifold_vcr.use_cassette()  # type: ignore
 def test_resolve_market_multiple_choice() -> None:
-    raise NotImplementedError()
+    client = ManifoldClient(api_key=API_KEY)
+    client.resolve_market('TEW8dlA3pxk3GalxeQkI', {0: 50, 2: 50})
 
 
 @manifold_vcr.use_cassette()  # type: ignore
 def test_resolve_market_pseudo_numeric() -> None:
-    raise NotImplementedError()
+    client = ManifoldClient(api_key=API_KEY)
+    client.resolve_market('MIVgHSvQ1s9MRGpm9QUb', 2045)
 
 
 @manifold_vcr.use_cassette()  # type: ignore
