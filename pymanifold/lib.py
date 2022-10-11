@@ -282,7 +282,7 @@ class ManifoldClient:
             return self._resolve_multiple_choice_market(market, *args, **kwargs)
         elif market.outcomeType == "PSEUDO_NUMERIC":
             return self._resolve_pseudo_numeric_market(market, *args, **kwargs)
-        else:
+        else:  # pragma: no cover
             raise NotImplementedError()
 
     def _resolve_binary_market(self, market: LiteMarket, probabilityInt: float) -> requests.Response:

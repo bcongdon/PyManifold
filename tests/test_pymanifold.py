@@ -220,6 +220,34 @@ def test_create_market_numeric() -> None:
     validate_lite_market(market)
 
 
+@manifold_vcr.use_cassette()  # type: ignore
+def test_resolve_market_binary() -> None:
+    client = ManifoldClient(api_key=API_KEY)
+    client.resolve_market('sSQYM2QLJBIoQcxZQB8J', 100)
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_resolve_market_free_resonse() -> None:
+    client = ManifoldClient(api_key=API_KEY)
+    client.resolve_market('qjwjSMWj1s8Hr21hVbPC', {1: 50, 3: 50})
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_resolve_market_multiple_choice() -> None:
+    raise NotImplementedError()
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_resolve_market_pseudo_numeric() -> None:
+    raise NotImplementedError()
+
+
+@manifold_vcr.use_cassette()  # type: ignore
+def test_cancel_market() -> None:
+    client = ManifoldClient(api_key=API_KEY)
+    client.cancel_market('H8Dc6yCj4TkvJfoOitYr')
+
+
 def validate_lite_market(market: LiteMarket) -> None:
     assert market.id
     assert market.creatorUsername
