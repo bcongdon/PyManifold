@@ -1,3 +1,5 @@
+"""Contains the various types of data that Manifold can return."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -91,6 +93,7 @@ class LiteMarket(DictDeserializable):
 
     @property
     def slug(self) -> str:
+        """Generate the slug of a market, given it has an assigned URL."""
         if self.url is None:
             raise ValueError("No url set")
         return self.url.split("/")[-1]

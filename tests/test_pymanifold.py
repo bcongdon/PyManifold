@@ -8,7 +8,7 @@ from pymanifold import ManifoldClient, __version__
 from pymanifold.types import Group, Market
 from vcr import VCR
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Any
 
     from pymanifold.types import Bet, LiteMarket, LiteUser

@@ -1,3 +1,5 @@
+"""Contains the client interface."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, cast
@@ -17,6 +19,7 @@ class ManifoldClient:
     """A client for interacting with the website manifold.markets."""
 
     def __init__(self, api_key: Optional[str] = None):
+        """Initialize a Manifold client, optionally with an API key."""
         self.api_key = api_key
 
     def list_markets(

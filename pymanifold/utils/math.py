@@ -1,3 +1,5 @@
+"""Contains common math functions for working with Manifold."""
+
 from math import log10
 
 

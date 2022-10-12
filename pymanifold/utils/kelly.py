@@ -1,3 +1,5 @@
+"""Contains a function to calculate the optimal bet if your estimated probability is the true probability."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Dict, Literal, cast
@@ -15,10 +17,12 @@ def kelly_calc(market: Market, subjective_prob: float, balance: int) -> tuple[in
     def shares_bought(
         market: Market, bet: float, outcome: Literal["YES", "NO"]
     ) -> tuple[float, dict[Literal["YES", "NO"], float]]:
-        """Figure out the number of shares a given purchace yields. Returns the number of shares and the resulting pool.
-        This function assumes Manifold Markets are using 'Maniswap' as their Automated Market Maker. More on Maniswap
-        can be found here: 'https://manifoldmarkets.notion.site/Maniswap-ce406e1e897d417cbd491071ea8a0c39'."""
+        """Figure out the number of shares a given purchace yields.
 
+        Returns the number of shares and the resulting pool. This function assumes Manifold Markets are using
+        'Maniswap' as their Automated Market Maker. More on Maniswap
+        can be found here: 'https://manifoldmarkets.notion.site/Maniswap-ce406e1e897d417cbd491071ea8a0c39'.
+        """
         # find the probability the market was initialised at
         p = market.p
         assert p is not None
@@ -74,7 +78,7 @@ def kelly_calc(market: Market, subjective_prob: float, balance: int) -> tuple[in
     def expected_log_wealth(
         market: Market, sub_prob: float, bet: float, outcome: Literal["YES", "NO"], balance: int
     ) -> float:
-        """Calculate the expected log wealth for a hypothetical bet"""
+        """Calculate the expected log wealth for a hypothetical bet."""
         p = sub_prob
 
         if outcome == 'YES':

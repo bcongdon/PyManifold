@@ -1,3 +1,5 @@
+"""Python bindings for the Manifold Markets API."""
+
 from .lib import ManifoldClient
 from .types import Bet, Comment, LiteMarket, Market
 
