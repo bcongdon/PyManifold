@@ -34,6 +34,21 @@ class Bet(DictDeserializable):
     createdTime: int
     id: str
 
+    loanAmount: int | None = None
+    userId: str | None = None
+    userAvatarUrl: str | None = None
+    userUsername: str | None = None
+    userName: str | None = None
+
+    orderAmount: int | None = None
+    isCancelled: bool = False
+    isFilled: bool = True
+    fills: list[dict[str, float | str | None]] | None = None
+    fees: dict[str, float] | None = None
+
+    probBefore: float | None = None
+    probAfter: float | None = None
+
 
 @dataclass
 class Comment(DictDeserializable):
