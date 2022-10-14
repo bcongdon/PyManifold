@@ -348,18 +348,18 @@ class ManifoldClient:
     @overload
     def create_comment(
         self, market: LiteMarket | str, comment: str, mode: Literal['markdown', 'html']
-    ) -> None:  # requests.Response:
+    ) -> requests.Response:
         ...
 
     @overload
     def create_comment(
         self, market: LiteMarket | str, comment: dict[str, Any], mode: Literal['tiptap']
-    ) -> None:  # requests.Response:
+    ) -> requests.Response:
         ...
 
     def create_comment(
         self, market: LiteMarket | str, comment: str | dict[str, Any], mode: str
-    ) -> None:  # requests.Response:
+    ) -> requests.Response:
         """Create a comment on a given market, using Markdown, HTML, or TipTap formatting."""
         if isinstance(market, LiteMarket):
             market = market.id
@@ -372,10 +372,10 @@ class ManifoldClient:
             data['markdown'] = comment
         else:
             raise ValueError("Invalid format mode")
-        # response = requests.post(
-        #     url=BASE_URI + "/comment",
-        #     json=data,
-        #     headers=self._auth_headers(),
-        # )
-        # response.raise_for_status()
-        # return response
+        response = requests.post(
+            url=BASE_URI + "/comment",
+            json=data,
+            headers=self._auth_headers(),
+        )
+        response.raise_for_status()
+        return response
