@@ -1,0 +1,72 @@
+interactions:
+- request:
+    body: '{"contractId": "fobho6eQKxn4YhITF1a8", "markdown": "This is an example
+      Markdown comment to test the new Markdown-aware comment API\n\n        - This
+      is part of PyManifold, which aims to provide native Python bindings to the Manifold
+      API\n        - Source code can be found [here](https://github.com/bcongdon/PyManifold)\n        -
+      Have a picture of a cat:\n        ![A picture of a cat](http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg)\n        "}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, br
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '482'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/comment
+  response:
+    body:
+      string: '
+
+        <html><head>
+
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+
+        <title>401 Unauthorized</title>
+
+        </head>
+
+        <body text=#000000 bgcolor=#ffffff>
+
+        <h1>Error: Unauthorized</h1>
+
+        <h2>Your client does not have permission to the requested URL <code>/</code>.</h2>
+
+        <h2></h2>
+
+        </body></html>
+
+        '
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '294'
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Thu, 13 Oct 2022 04:02:53 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/comment
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::h4xhs-1665633772921-f519699a681d
+    status:
+      code: 401
+      message: Unauthorized
+version: 1

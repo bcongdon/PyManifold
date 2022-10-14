@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Dict, cast
+from typing import TYPE_CHECKING, Any, Dict, cast, overload
 
 import requests
 
@@ -10,7 +10,7 @@ from .types import Bet, Group, LiteMarket, LiteUser, Market
 from .utils.math import number_to_prob_cpmm1
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Iterable, List, Optional, Sequence, Union
+    from typing import Iterable, List, Literal, Optional, Sequence, Union
 
 BASE_URI = "https://manifold.markets/api/v0"
 
@@ -344,3 +344,38 @@ class ManifoldClient:
 
     def _resolve_numeric_market(self, market: LiteMarket, number: float) -> requests.Response:
         raise NotImplementedError("TODO: I suspect the relevant docs are out of date")
+
+    @overload
+    def create_comment(
+        self, market: LiteMarket | str, comment: str, mode: Literal['markdown', 'html']
+    ) -> None:  # requests.Response:
+        ...
+
+    @overload
+    def create_comment(
+        self, market: LiteMarket | str, comment: dict[str, Any], mode: Literal['tiptap']
+    ) -> None:  # requests.Response:
+        ...
+
+    def create_comment(
+        self, market: LiteMarket | str, comment: str | dict[str, Any], mode: str
+    ) -> None:  # requests.Response:
+        """Create a comment on a given market, using Markdown, HTML, or TipTap formatting."""
+        if isinstance(market, LiteMarket):
+            market = market.id
+        data: dict[str, Any] = {'contractId': market}
+        if mode == 'tiptap':
+            data['content'] = comment
+        elif mode == 'html':
+            data['html'] = comment
+        elif mode == 'markdown':
+            data['markdown'] = comment
+        else:
+            raise ValueError("Invalid format mode")
+        # response = requests.post(
+        #     url=BASE_URI + "/comment",
+        #     json=data,
+        #     headers=self._auth_headers(),
+        # )
+        # response.raise_for_status()
+        # return response

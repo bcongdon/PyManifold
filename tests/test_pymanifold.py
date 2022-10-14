@@ -153,6 +153,97 @@ def test_get_market_by_id() -> None:
 
 
 @manifold_vcr.use_cassette()  # type: ignore
+def test_create_comment() -> None:
+    contract = "fobho6eQKxn4YhITF1a8"
+    client = ManifoldClient(api_key=API_KEY)
+    client.create_comment(
+        market=contract,
+        mode='markdown',
+        comment="""This is an example Markdown comment to test the new Markdown-aware comment API
+
+        - This is part of PyManifold, which aims to provide native Python bindings to the Manifold API
+        - Source code can be found [here](https://github.com/bcongdon/PyManifold)
+        - Have a picture of a cat:
+        ![A picture of a cat](http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg)
+        """
+    )
+    client.create_comment(
+        market=contract,
+        mode='html',
+        comment="""<p>This is an example of an HTML comment to test the new HTML-aware comment API</p>
+        <p><ul>
+            <li>This is part of PyManifold, which aims to provide native Python bindings to the Manifold API</li>
+            <li>Source code can be found <a src="https://github.com/bcongdon/PyManifold">here</a></li>
+            <li>Have a picture of a cat:</li>
+        </ul></p>
+        <img alt="A picture of a cat"
+        src="http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg">
+        """
+    )
+    client.create_comment(
+        market=contract,
+        mode='tiptap',
+        comment={
+            "type": "doc", "from": 0, "to": 403,
+            "content": [
+                {
+                    "type": "paragraph", "from": 0, "to": 80,
+                    "content": [{
+                        "type": "text", "from": 1, "to": 79,
+                        "text": "This is an example Tip-Tap comment to test the new Tip-Tap-aware comment API"
+                    }]
+                }, {
+                    "type": "bulletList", "from": 80, "to": 294,
+                    "content": [
+                        {
+                            "type": "listItem", "from": 81, "to": 189,
+                            "content": [{
+                                "type": "paragraph", "from": 82, "to": 188,
+                                "content": [{
+                                    "type": "text", "from": 83, "to": 187,
+                                    "text": ("This is part of the PyManifold project, which aims to provide native "
+                                             "Python bindings to the Manifold API")
+                                }]
+                            }]
+                        }, {
+                            "type": "listItem", "from": 189, "to": 264,
+                            "content": [{
+                                "type": "paragraph", "from": 190, "to": 263,
+                                "content": [{
+                                    "type": "text", "from": 191, "to": 262,
+                                    "text": "Source code can be found [here](https://github.com/bcongdon/PyManifold)"
+                                }]
+                            }]
+                        }, {
+                            "type": "listItem", "from": 264, "to": 293,
+                            "content": [{
+                                "type": "paragraph", "from": 265, "to": 292,
+                                "content": [
+                                    {
+                                        "type": "text", "from": 266, "to": 291,
+                                        "text": "Have a picture of a cat: "
+                                    }
+                                ]}
+                            ]
+                        }
+                    ]
+                }, {
+                    "type": "paragraph", "from": 294, "to": 296,
+                    "content": [{
+                        "type": "image", "from": 295, "to": 296,
+                        "attrs": {
+                            "src": "http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg",
+                            "alt": "A picture of a cat",
+                            "title": None
+                        }
+                    }]
+                }
+            ]
+        }
+    )
+
+
+@manifold_vcr.use_cassette()  # type: ignore
 def test_create_bet_binary() -> None:
     client = ManifoldClient(api_key=API_KEY)
     betId = client.create_bet(contractId="BxFQCoaaxBqRcnzJb1mV", amount=1, outcome="NO")
