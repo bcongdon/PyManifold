@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from inspect import signature
-from typing import TYPE_CHECKING, Mapping, Sequence, Union
+from typing import TYPE_CHECKING, Dict, Mapping, Sequence, Union
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Dict, Iterable, List, Literal, Optional, Type, TypeVar
+    from typing import Iterable, List, Literal, Optional, Type, TypeVar
 
     from .lib import ManifoldClient
 
@@ -130,8 +130,10 @@ class Market(LiteMarket):
     def from_dict(cls, env: JSONDict) -> 'Market':
         """Take a dictionary and return an instance of the associated class."""
         market = super(Market, cls).from_dict(env)
-        market.bets = [Bet.from_dict(bet) for bet in env["bets"]]
-        market.comments = [Comment.from_dict(bet) for bet in env["comments"]]
+        bets: Sequence[JSONDict] = env['bets']  # type: ignore[assignment]
+        comments: Sequence[JSONDict] = env['comments']  # type: ignore[assignment]
+        market.bets = [Bet.from_dict(bet) for bet in bets]
+        market.comments = [Comment.from_dict(bet) for bet in comments]
         return market
 
 

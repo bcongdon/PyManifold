@@ -22,7 +22,7 @@ manifold_vcr = VCR(
     filter_headers=["authorization"],
 )
 
-get_bet_params: list[JSONDict] = [
+get_bet_params: list[dict[str, str]] = [
     {'username': 'LivInTheLookingGlass'},
     {'market': 'will-bitcoins-price-fall-below-25k'},
     {}
@@ -149,7 +149,6 @@ def test_get_user() -> None:
 def test_list_bets() -> None:
     client = ManifoldClient()
     limit = 45
-    kwargs: JSONDict
     for kwargs in get_bet_params:
         key = '-'.join(kwargs) or 'none'
         with manifold_vcr.use_cassette(f'test_list_bet/{key}.yaml'):
