@@ -269,6 +269,8 @@ class ManifoldClient:
         if response.status_code in range(400, 500):
             response.raise_for_status()
         elif response.status_code >= 500:
+            # Sometimes when there is a serverside error the market is still posted
+            # We want to make sure we still return it in those instances
             for mkt in self.list_markets():
                 if (question, outcomeType, closeTime) == (mkt.question, mkt.outcomeType, mkt.closeTime):
                     return mkt
