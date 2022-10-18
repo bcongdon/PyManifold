@@ -10,9 +10,7 @@ from pymanifold.types import Group, Market
 from vcr import VCR
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any
-
-    from pymanifold.types import Bet, LiteMarket, LiteUser
+    from pymanifold.types import Bet, JSONDict, LiteMarket, LiteUser
 
 API_KEY = getenv("MANIFOLD_API_KEY", "fake_api_key")
 LOCAL_FOLDER = str(Path(__file__).parent)
@@ -24,7 +22,7 @@ manifold_vcr = VCR(
     filter_headers=["authorization"],
 )
 
-get_bet_params: list[dict[str, Any]] = [
+get_bet_params: list[JSONDict] = [
     {'username': 'LivInTheLookingGlass'},
     {'market': 'will-bitcoins-price-fall-below-25k'},
     {}
@@ -39,7 +37,7 @@ markdown_comment = """This is an example Markdown comment to test the new Markdo
 ![A picture of a cat](http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg)
 """
 html_comment = markdown(markdown_comment.replace("Markdown", "HTML"))
-tiptap_comment = {
+tiptap_comment: JSONDict = {
     "type": "doc", "from": 0, "to": 403,
     "content": [
         {
@@ -151,7 +149,7 @@ def test_get_user() -> None:
 def test_list_bets() -> None:
     client = ManifoldClient()
     limit = 45
-    kwargs: dict[str, Any]
+    kwargs: JSONDict
     for kwargs in get_bet_params:
         key = '-'.join(kwargs) or 'none'
         with manifold_vcr.use_cassette(f'test_list_bet/{key}.yaml'):

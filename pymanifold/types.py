@@ -4,21 +4,25 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from inspect import signature
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Mapping, Sequence, Union
 
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Any, Dict, Iterable, List, Literal, Mapping, Optional, Type, TypeVar, Union
+    from typing import Dict, Iterable, List, Literal, Optional, Type, TypeVar
 
     from .lib import ManifoldClient
 
     T = TypeVar("T")
+
+# To check with mypy, pass in `--enable-recursive-aliases`
+JSONType = Union[int, float, bool, str, None, Sequence['JSONType'], Mapping[str, 'JSONType']]
+JSONDict = Dict[str, JSONType]
 
 
 class DictDeserializable:
     """An object which can be deserialized from a known dictionary spec."""
 
     @classmethod
-    def from_dict(cls: Type[T], env: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], env: JSONDict) -> T:
         """Take a dictionary and return an instance of the associated class."""
         return cls(
             **{k: v for k, v in env.items() if k in signature(cls).parameters}  # type: ignore
@@ -123,7 +127,7 @@ class Market(LiteMarket):
     answers: Optional[List[Dict[str, Union[str, float]]]] = None
 
     @classmethod
-    def from_dict(cls, env: dict[str, Any]) -> 'Market':
+    def from_dict(cls, env: JSONDict) -> 'Market':
         """Take a dictionary and return an instance of the associated class."""
         market = super(Market, cls).from_dict(env)
         market.bets = [Bet.from_dict(bet) for bet in env["bets"]]

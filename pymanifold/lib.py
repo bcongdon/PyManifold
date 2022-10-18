@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Dict, cast, overload
 
 import requests
 
-from .types import Bet, Group, LiteMarket, LiteUser, Market
+from .types import Bet, Group, JSONDict, LiteMarket, LiteUser, Market
 from .utils.math import number_to_prob_cpmm1
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -85,37 +85,37 @@ class ManifoldClient:
         """Get a market by id."""
         return Market.from_dict(self._get_market_by_id_raw(market_id))
 
-    def _get_market_by_id_raw(self, market_id: str) -> Dict[str, Any]:
+    def _get_market_by_id_raw(self, market_id: str) -> JSONDict:
         """Get a market by id."""
         response = requests.get(url=BASE_URI + "/market/" + market_id)
-        return cast(Dict[str, Any], response.json())
+        return cast(JSONDict, response.json())
 
     def get_market_by_slug(self, slug: str) -> Market:
         """Get a market by slug."""
         return Market.from_dict(self._get_market_by_slug_raw(slug))
 
-    def _get_market_by_slug_raw(self, slug: str) -> Dict[str, Any]:
+    def _get_market_by_slug_raw(self, slug: str) -> JSONDict:
         """Get a market by slug."""
         response = requests.get(url=BASE_URI + "/slug/" + slug)
-        return cast(Dict[str, Any], response.json())
+        return cast(JSONDict, response.json())
 
     def get_market_by_url(self, url: str) -> Market:
         """Get a market by url."""
         return Market.from_dict(self._get_market_by_url_raw(url))
 
-    def _get_market_by_url_raw(self, url: str) -> Dict[str, Any]:
+    def _get_market_by_url_raw(self, url: str) -> JSONDict:
         """Get a market by url."""
         slug = url.split("/")[-1].split("#")[0]
         response = requests.get(url=BASE_URI + "/slug/" + slug)
-        return cast(Dict[str, Any], response.json())
+        return cast(JSONDict, response.json())
 
     def get_user(self, handle: str) -> LiteUser:
         """Get a user by handle."""
         return LiteUser.from_dict(self._get_user_raw(handle))
 
-    def _get_user_raw(self, handle: str) -> Dict[str, Any]:
+    def _get_user_raw(self, handle: str) -> JSONDict:
         response = requests.get(url=BASE_URI + "/user/" + handle)
-        return cast(Dict[str, Any], response.json())
+        return cast(JSONDict, response.json())
 
     def _auth_headers(self) -> dict[str, str]:
         if self.api_key:
@@ -324,7 +324,7 @@ class ManifoldClient:
 
     def _resolve_free_response_market(self, market: LiteMarket, weights: Dict[int, float]) -> requests.Response:
         if len(weights) == 1:
-            json: Dict[str, Any] = {"outcome": next(iter(weights))}
+            json: JSONDict = {"outcome": next(iter(weights))}
         else:
             total = sum(weights.values())
             json = {
@@ -355,17 +355,17 @@ class ManifoldClient:
 
     @overload
     def create_comment(
-        self, market: LiteMarket | str, comment: dict[str, Any], mode: Literal['tiptap']
+        self, market: LiteMarket | str, comment: JSONDict, mode: Literal['tiptap']
     ) -> requests.Response:
         ...
 
     def create_comment(
-        self, market: LiteMarket | str, comment: str | dict[str, Any], mode: str
+        self, market: LiteMarket | str, comment: str | JSONDict, mode: str
     ) -> requests.Response:
         """Create a comment on a given market, using Markdown, HTML, or TipTap formatting."""
         if isinstance(market, LiteMarket):
             market = market.id
-        data: dict[str, Any] = {'contractId': market}
+        data: JSONDict = {'contractId': market}
         if mode == 'tiptap':
             data['content'] = comment
         elif mode == 'html':
