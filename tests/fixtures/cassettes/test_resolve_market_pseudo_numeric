@@ -1,0 +1,110 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://manifold.markets/api/v0/market/MIVgHSvQ1s9MRGpm9QUb
+  response:
+    body:
+      string: '{"id":"MIVgHSvQ1s9MRGpm9QUb","creatorId":"k13AzY3mu8XTju3xRZV3P8qBjEC2","creatorUsername":"LivInTheLookingGlass","creatorName":"Olivia","createdTime":1665527833753,"creatorAvatarUrl":"https://firebasestorage.googleapis.com/v0/b/mantic-markets.appspot.com/o/user-images%2FLivInTheLookingGlass%2FP1120243.jpg?alt=media&token=7bb458ea-8b98-433b-974e-4407497b9d97","closeTime":4133955599000,"question":"Example,
+        please ignore","tags":[],"url":"https://manifold.markets/LivInTheLookingGlass/example-please-ignore-dcec2a09bbb1","pool":{"YES":100,"NO":100},"p":0.5887355477484346,"totalLiquidity":100,"outcomeType":"PSEUDO_NUMERIC","mechanism":"cpmm-1","volume":0,"volume7Days":0,"volume24Hours":0,"isResolved":false,"min":2023,"max":2100,"isLogScale":true,"comments":[],"bets":[],"description":{"type":"doc","content":[]},"textDescription":""}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '39'
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '837'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 22:37:14 GMT
+      Etag:
+      - '"5ky97vfy2gn9"'
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Matched-Path:
+      - /api/v0/market/[id]
+      X-Vercel-Cache:
+      - STALE
+      X-Vercel-Id:
+      - cle1::cle1::fmq65-1665527874464-a811c01d4bfc
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"outcome": "MKT", "value": 2045, "probabilityInt": 71.96933145315631}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '70'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/market/MIVgHSvQ1s9MRGpm9QUb/resolve
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2xT226bQBD9lWil9snYhgUDlqIqdZyLaieOL1HTqqoWmOCNd1nCLiRu5H/vALaS
+        pnnhMjN7Zuacsy9El5HmyXamlCDDfofkhYpGa5aloMnwhUiVmXWTSNi2eT8BbPBj1yFGGSYm/LHk
+        CTeYtPuYjgtgBpIll4CRwcDzHD+g1Pdoh4Bg2vC4Ke53aYAQLMU2P3/tz6nipGKGFasChyFrY3I9
+        7PXueQER06Axz1LopkqlAljOdTdWslf1e1FPsgyRLcmKDRjdZXmuc2WavOqVGgqLSzyrPzlnE15d
+        Zss1TJTa8Cw9x6Hq8My2nb7j0u5Dnn5hwhxLSDj7bNQGsmM/ilwvAGYFURhYLqWRFfouWK7b993Q
+        j8Ik9EmH3Csh1BMUI1VmBtfvEMkzMkRc3J7rOWglKkjI0BQldEilRCnBcS9UWeiW/ZoYLwh86nmu
+        77uBS90Bcg86LnhuuMpqUWIUBeoGNXFmmyPTJFEx2R0g/VO2bQH3tF6xWg5yLXjFGQ76WCKbDRoZ
+        PzOZC+gc4QNJPuJppgrAmmaTGEPLV5FwP4hR3jNo7ZELZu5VIfG/aScObjgE9v3b311rLzL0gu77
+        FfeFl0gO2dj05M8dlWXwfflQ0uf5j1s6Cx6/PoxHDg7GM244EzOEYhEXezv9z5pkz8h948qKa34o
+        JXkZCR6TA1nNnLzuO728TS8W1Y2tw+n8PJfhzSrCMlUa9BEsW6Jni/Hq9Pr31Wo6nl+OMB0LhRz9
+        43ccgb7utEL7Za0AH3kPIbQoU8xCK4XVKmG1SlhJDLHD+mEURTbW5s1NfSFX1/sbdzdeNF/IroQY
+        ry7XEsHiXEqrPsD1RKWLmAk4+K6ofVju9Z9+W5K3oVsmSqg963pvwx8u+Jp+J4Zvh4OQUtv1qO0N
+        qLP7CwAA//8DALXIgyBpBAAA
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 22:37:55 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/market/[id]/resolve
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::d2dc7-1665527874554-68b3b350aa48
+    status:
+      code: 200
+      message: OK
+version: 1

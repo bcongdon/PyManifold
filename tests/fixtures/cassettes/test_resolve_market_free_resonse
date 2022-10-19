@@ -1,0 +1,134 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://manifold.markets/api/v0/market/qjwjSMWj1s8Hr21hVbPC
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA9xX2W7bOhD9FUPAvU9eJIrUEqAo3NROnCaNmzhp2qK4oGzapiOJskg5G/zvd2hJ
+        seNsQt4SvUjiMpyZc86QvDP4yNgx5rOr2enRz5klvf0UWdPzoL9r1I1hyqgSaU8PubTs9u0vO8q8
+        i8Ess69Pfp/bfW/+ZdbZReuhZ5KlMY0YTDjki148mLJDIS55PNkLqZTrgd/zQcchX3BaNrPRgOtm
+        y3EItollmZ6L7qe0F1TR9CwNYd5UqUTutFpjnrKASiahn05YcyLEJGQ04bI5FFFrYbaCVkRjxYeN
+        iKaXTMkmTRKZCLXqF60MHG7wCObKf1D3KZ+huW9ZyETYbs6SyWcaqk8RG3H6rxKXLP7kBgEmHqMN
+        L/C9BrbtoOG7mDUwNl3su4E/8l0dYCgkuw/PMR1CsAlP3Zhn4D4XMYTVuaZRErLaOGWsljLwM5as
+        lnteG4u0pvTQeFJLsjQBezqhik6ksfPnb93IHqQGwuZjEY6aReCtp4JrsXzFhl6xUa5Y5KoBKzYU
+        gzUSIcD0nWGC89plS7/rBspftn4t64bIFCSVDW4SDW33pNP576Rz2j/+ftoBGxEbTsElGUHfKIka
+        mjULEWY6I7ZZfrtf6Q2Ec/+P8L7I0ryFyxMmRbhgwMcxDSWrGxCDOktGj6ljm4S4dYPG8orp6X/u
+        DA11FSrTd82zOIsClkIigHIiVikdqt4LEs9eFWy8pdRVwbA08di1gs9ApDD6WQl7HiZAoFQENOAh
+        VzcAZdNCGDmmTYiJfOIR113W79553otsZDGPEpEq8KnMFXpTmp/MJvjooDXGqF6Z1FW4sA2S7Zg+
+        dlxMiINAUEiDVHW9VeT2u1fT67gVuMdC1WDwOAurYmkD//1qwJR4248xwq6PPN/Hpoc8DNEu/2qT
+        UcRiVewKAVN5/Rsz2C+giBfbaZexVVUN+TzjI7BXNiQhVVD5o/x/+bz7jpkn6PVNv9gZSkpEIgN5
+        rPYOOaWpdotoTwSN20WfWVDIsdq8fTVNprtmF0f9fRHOvxW4vPPzQAXcNdhfGGCRA1NVe3pae6w0
+        Y55gSG7n4fmrVPbHT2kpgldYX3+okmXBxnB+xN3hFB33sm/z2/m4J/eEUVUEj9O+pj92m7AR2hZB
+        tm0h1/LJyzvAllS2iLIpsLeRhvgu2ng2FYxWbHlzMVkbsozq3m3F++xRw/kIpeGeFKTpIeISx8c+
+        IR7eBsmFA5QNXDFB2g7GBUe78ex3/8gaHN52eweJ9cPrjKYVxbHJmydqzzZ5q9Bec6WMZ3V1qDLp
+        QaDWJmfMD1H7q7J+jcczCOSX96z363h2dXGwN1gcHHa7F4fndkXAuWzHcMHbUWnGHkH+0pW8lP92
+        1Xyk/4dlVJ9ORkwOU57kN967lZtMBwknFJXfHBMK+KU0mRp6fNE4EkMg0+q49XXTgmEs/wcAAP//
+        AwDzCVlFxRAAAA==
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '0'
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Oct 2022 20:54:26 GMT
+      Etag:
+      - W/"11ostcllmnk3b9"
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      X-Matched-Path:
+      - /api/v0/market/[id]
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::t86xt-1665435266497-a47c5e880d2b
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"outcome": "MKT", "resolutions": [{"answer": 1, "pct": 50.0}, {"answer":
+      3, "pct": 50.0}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '91'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/market/qjwjSMWj1s8Hr21hVbPC/resolve
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA9RVbU/bMBD+K1Wk7VPTJnHcJEho2ljZ0NiooLA3TZOTXFsXJza2U2AV/33nNMBe
+        YLCPfErs88X3vNxl7bHanIM23tbXtdcY0DWrwNvy9vlqr54uYF/KU17P3whmjNf3LFxYjOZS4yau
+        Cw3MQjnlLikcjWhMaBimaUwxJmurWWH3Ssw4W54vj95/XIYmfaujcHGST3Ywv26qHDSm4uvm4gPB
+        V5xhyBXTpp6G5OWPz6Rq0k/TZUMuDr+ckEl69mo53onwHHdnQnxhK2aZPtYC1wtrldkaDmdcQ84M
+        GCs1m8NgLuVcAFPcDApZDVfBMB9WrLa88CumT8GaAVPKKGnbuBy6KnxeYa55Fu3exQpuT8IwCqKY
+        DJZq/oIJu11BydlzK0+h3k7yPKYpMD/Ns9SPCcn9LInBj+MgibMkz8os8a766xsuosdR10nR1LxS
+        UlsE8cQ56KSM/kP7O+2HRYyi/iPM/LvjnAT/m/P4Slto5L6SSUBodtsN5EbdWtoeXjFrxJMX92FP
+        X33re0LiNCoQ0JTN3VByW8zYY1XexRqlSd9bSdFUEMVvZePmWNBxLPXLJ83XBhaaIdhQ8ArsX6YZ
+        YQwHwFkDGEVEe6Xj7N9eREbtDbdWWiYwF5drL8BvB/jF0D372Ijtg7jHVd8rwRSaK8tl7Q47OQFn
+        jvtv2EvlmkIxpFQztWiV7DZLWWBrdWiS1+yyk0hI1PhXPNEoIRFxPhECChR7F6AtSyA+XnJ7iRtt
+        rhLMzqSurted3Jsl3sXNIRgpVoBOs7qBrvvumaNKSvEw+u6Ox7Q6qmE2LHnjC1YpAb2ZBuhpQBvV
+        BnobY/UQQs+6o/W8pxqtkBA3YcCJzQvEi2gGCb25+8Mfo0c2Fi0J0w3Pu4fj8ffD8dHk4MPRGKMz
+        pNH10o5snEphp/XRgmn4U+2YDtKIJnSUxRmladyij5NBRlMS0oiQMErCjLZsUMeGEc0c74QNPN/B
+        86/hdX3jIzzfgjMyNzznogXkqSYXvPB+t+1tjR3U4wfncAXFgtXcVM5iqvLv/RuEQZrg30A7RzSd
+        LO/fTb1ft+704W24pSt00K8ZuPoJAAD//wMAn9Jx+TgJAAA=
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Oct 2022 20:54:27 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/market/[id]/resolve
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::t86xt-1665435266833-a0d67edf6aff
+    status:
+      code: 200
+      message: OK
+version: 1

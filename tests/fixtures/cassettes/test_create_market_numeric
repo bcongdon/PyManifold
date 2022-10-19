@@ -1,8 +1,9 @@
 interactions:
 - request:
-    body: '{"outcomeType": "NUMERIC", "question": "Testing Numeric Response Market
-      creation through API", "description": "Going to resolves as N/A", "closeTime":
-      4102444800000, "tags": ["fun"], "min": 0, "max": 100}'
+    body: '{"outcomeType": "PSEUDO_NUMERIC", "question": "Testing Numeric Response
+      Market creation through API", "description": "Going to resolves as N/A", "closeTime":
+      5102444800000, "tags": ["fun"], "min": 0, "max": 100, "isLogScale": false, "initialValue":
+      50}'
     headers:
       Accept:
       - '*/*'
@@ -11,71 +12,53 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '204'
+      - '252'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.0
+      - python-requests/2.28.1
     method: POST
     uri: https://manifold.markets/api/v0/market
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA+yaS3PaSBSF/wqltbF11K0XVbMgT3sRJ2PjmkmmZiFDG2QLxOiR2JXyf5/G6F4y
-        VZzdLJ2N4EoccQQf/Tmln0G5CCZBbprto/v28dPq+nxazT7PPvTnwUnQVv3S7+1c25Wb5XjTr11T
-        zseNa7f1pnXjddE8uG48b5w/eO3mq2JTtmv/isV2PY78rO67eb12s6et89PLm0/vry7e+vm2rqtg
-        8jMIg0l4Gp8EGLbRsDXD1g7beNgmwzYdttmwzSVHAyUREgnJhIRCUiGxkFxIMCQ5kuRI36skR5Ic
-        SXIkyZEkR5IcSXIkyUaSjSQbvQySbCTZSLKRZCPJRpKNJFtJtpJsJdnqFZZkK8lWkq0kW0m2khxL
-        cizJsSTHkhzrhyfJsSTHkhxLcizJiSQnkpxIciLJiSQn+r2Q5ESSE0lOJDmV5FSSU0lOJTmV5FSS
-        U/3KSXIqyakkZ5KcSXImyZkkZ5KcSXImyZl+myU5k+RcknNJziU5l+RcknNJziU5l+RcQTmQoqiE
-        ykqosIRKS6i4hMpLqMCESkyoyIR6jl9w1HMcgDwQeUDywOQBygOVByyVSyiYUDKhaELZhMIJpROK
-        J5RPKKBQQqGIQhmFQgqlFIoplFMoqFBSoahCWYXCCqUViiuUVyiwUGKhyEKZhUILpRaKLZRbKLhQ
-        cqHoQtmFwgulF4ovlF8owFCCoQhDGYZCDKUYijGUYyjIUJKhKENZhsIMpRmKM5RnKNBQoqFIQ5mG
-        Qg2lGoo1lGso2FCyoWhD2YbCDaUbijeUbyjgUMKhiEMZh0IOpRyKOQbOn0+Cru6K6o3r2tf1duj6
-        ut6+rrf7B6/r7et6+7revjx6XW//z/X2elX4P5KHFTc9DVOPcJp5npLYpvHuBcfH0fGxOT62x8fx
-        8XFyfJweH2fHxzmpw2qSniBFQZqCVAXpClIWpC1IXZC+Eekbsc+V9I1I34j0jUjfiPSNSN+I9I1I
-        X0P6GtLXsC8y6WtIX0P6GtLXkL6G9DWkryV9LelrSV/LyCV9LelrSV9L+lrS15K+Mekbk74x6RuT
-        vjH7qSJ9Y9I3Jn1j0jcmfRPSNyF9E9I3IX0T0jdhv82kb0L6JqRvQvqmpG9K+qakb0r6pqRvSvqm
-        bDEifVPSNyV9M9I3I30z0jcjfTPSNyN9M9I3Y6sv6ZuRvjnpm5O+Oembk7456ZuTvjnpm5O+OdMN
-        6htMOEJmHCFTjpA5R8ikI2TWETLtCJl3hEw8QtacqxZrTmWL2hbVLepbVLiocVHlYs4FJl1g1gWm
-        XWDeBSZeYOYFpl5g7gUmX2D2BaZfYP4FJmBgBgamYGAOBiZhYBYGpmFgHgYmYmAmBqZiYC4GJmNg
-        NgamY2A+BiZkYEYGpmRgTgYmZWBWBqZlYF4GJmZgZgamZmBuBiZnYHYGpmdgfgYmaGCGBqZoYI4G
-        JmlglgamaWCeBiZqYKYGpmpgrgYma2C2BqZrYL4GJmxgxgambGDOBiZtYNYGpm1g3gYmbmDmBqZu
-        YO4GJm9g9gamb2D+BiZwYAYHpnA47nDPJ8FtP39w3du633TBJArDk2BdboLJbls8BhPsJvPGFV3d
-        XCyCSXB+f/OtWNmvD/c3F+vll2tMr+Juc/fH/Wy5u9dkOPSyWDt/8Bu3OcxuWtds9vPbeb1ZLupf
-        dk6/F13R3DSV37vqum07OTurVuZ0WdfLyvX+pf4lndt0p/N6fVaMz6afV7AfV5d3ER5zs+1sX6zN
-        3Z+lM+/M71+fru+nN09fHt8ns8Xnhx+b6W9tnozn/nz/9Lv7aPypJ8Fsf0fN6HJ/R83oyu3vqBl9
-        ermjZvTy1vyho27V1P1yNZp+ufAJC9fOm3I7hHysdxFdPWpcW1ffXTsq2tHl2dQf2BXLNpj8Fdz1
-        m+Dvk6Cqf/gWRetm/51/L9vytqzK7snHbfvbqty9z7K92gf6i35XVK0bLpVbzMrdNfS/kbExWZpn
-        eZ75fVXtg1/2WG/Z1tos3P3z8XXV78b6MLLndd+0v0zSd8XT/vm8rio39yf54Pb/czp8PP7py/6q
-        /KcvF/6tymBbFd1d3az3z5+f/wUAAP//AwC8lV0dyyQAAA==
+        H4sIAAAAAAAAA2xTbW/aMBD+K5Gl7ROBvFECUjXRlnZIlDJepnVVNTnJkbjYcWo7lLbiv++SAN2k
+        Jh9yfp67y708ficsIQMyfJst1lcXm10myvv8xzjPgoK0iOZliqwBbVie2nkpQLHYVqALmWuwBVUb
+        MHaswHZ8CBMn8MEPuhgpIM5ozrTA8LgQwnYRlKWJpYDlawEIzxaj1dXdn+nqdjQfXyJtpKF8wp5L
+        ljDzSgau47QIy5lhlM+UjGjEeE047W6LFMevlJwM3sn9aHEImd7Vxh45jCKDrtNYl1hRCrpyTmiV
+        pkVeADa1IWRuMrQwSLC8gejuWIOeyHQRU45lrynX0CLYMjVSjavhbVx/+HbvizL8tXwq/d38909/
+        Fj5fPI0uPXJynVJRdX3H2ZbRD3ilQeUNNWHbcb7MYCLlBsd9w6nWH47DLTVUrRQ2SzJjCj3odNZM
+        QUQ1rkcqmkI7lTLlQAum2zjoztbpRB1Bc4M7a1al27QocHmm5mWnxL/bTGCs/uJdf1YAwjPX9Rwv
+        8NtPRfqNcnMuIGH0q5EbyM97URR0Q6B2GPVDO/D9yO73ArCDwOkF/V7UT/o9bOK5rDQkcbJk2ajJ
+        mjZqsuYHNVm3dYlW3S+6WiZTskwzazgbY4YEdKxY0SR5J6YRUSLjakS4PcgNGTyciILiRBQtss9p
+        AztTSa76DMiNrAoy0kJlS74FbVFtTTtDsn/EF91oirJ5eGwRLl9AxTjy5QnaMs2OyiRFGXFWlcT0
+        vMmV/K8ZSJas2rZ7dtYNvL7nuW4/QI5LzFkzXReHHQShUz2YXvKygk+mF3yXpdL/IL0r+tqcAVeG
+        2z7cEj+seuccYvztNTTSP8gJj3UEP963I1BwatZSiea83/8FAAD//wMA+bgLwyIEAAA=
     headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
       Connection:
       - keep-alive
       Content-Encoding:
       - gzip
       Content-Type:
       - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Oct 2022 19:13:41 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
       Transfer-Encoding:
       - chunked
-      cache-control:
-      - public, max-age=0, must-revalidate
-      date:
-      - Thu, 16 Jun 2022 00:19:59 GMT
-      etag:
-      - W/"24cb-XrGJ/mbNfbqr4TDeFRT1B3CxB5c"
-      server:
-      - Vercel
-      strict-transport-security:
-      - max-age=63072000
-      vary:
+      Vary:
       - Origin
-      x-matched-path:
+      X-Matched-Path:
       - /api/v0/market
-      x-vercel-cache:
+      X-Vercel-Cache:
       - MISS
-      x-vercel-id:
-      - pdx1::cle1::4h4fh-1655338798446-00ceb8aa6df3
+      X-Vercel-Id:
+      - cle1::cle1::rr6gd-1665429220958-424e99fce428
     status:
       code: 200
       message: OK

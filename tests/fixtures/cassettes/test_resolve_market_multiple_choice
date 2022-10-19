@@ -1,0 +1,146 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://manifold.markets/api/v0/market/TEW8dlA3pxk3GalxeQkI
+  response:
+    body:
+      string: !!binary |
+        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
+        7P4a1fQ3AAAA//8DAHokLty1FwAA
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '25'
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 22:30:18 GMT
+      Etag:
+      - W/"nkbl8hu6qg4ol"
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      X-Matched-Path:
+      - /api/v0/market/[id]
+      X-Vercel-Cache:
+      - STALE
+      X-Vercel-Id:
+      - cle1::cle1::gd44f-1665527444140-b39ca8bf60ac
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"outcome": "MKT", "resolutions": [{"answer": 0, "pct": 50.0}, {"answer":
+      2, "pct": 50.0}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '91'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/market/TEW8dlA3pxk3GalxeQkI/resolve
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA9RXbW/bNhD+KwSB7ZNly5L8ChRFmqWtsbTJMmfdVgwDJZ0txpSo8sWJG+S/7yjJ
+        iZM4sbPtS/Il1onk3T3Pc3fUNS2lFHR8TX06DsN2eO+v36Ld7eZgm/mmRRMFzEA65TnQcbff7/WC
+        QdgfRX2/RZdc85gLblZ0TEsbC57QFpXWJDKH6arEHfTT+fF0cnp89Pfhx5PJ4RG+twX/ZuEdGCPV
+        JNV0/JUuuuHB9z/C3A5/n17Y8Orsz9/C0+G3dxdHhwH9Cx1JYXMIoo/SKtyAro00TPyaMQW6ybU3
+        aA/Cnh/0R93hqB/0Br0q123mYJsZc8WwtOGywLC/ZDzJSIIOWGJAEa5JjC/fPoj/UNrCIC4NTi4h
+        3PxsOi2aA55bcJ3j0rTMPWdrtn9mDmZ6IviSMzQbNncAIQQzKYS8hA2PNSgVGs3ugyUzTJ0rpJ9m
+        xpR63OnMuIKYaYxdKjaH9lzKuQBWct1GljpLvxN3clYYnng5Uwswus3KUpfSVO9lx2pQHs9xr/4h
+        eH/Ml5NimsGxlAtezD8Ipp35tNsN/CAK2xfl/C0T5k0OKWc/GrmA4s0gjqPeEJg3jEdDLwrD2BsN
+        IvCiyB9Eo0E8SkcDzBWPMojqVqU1CZ5jLEUN0bZAmkPOy/SxZAf+qOevQRv8xFa1jhKEFZDh9D3U
+        SioFMzOpcnyuFggkm6co8bWhCaV+RNGwQiMtjqVr6rDaRwHFA5qfKzIDV8g3/ciUWpFTaVCNbocs
+        jJNm5W169GWYioOwvFqEH5i4gl8WE+fF5jEudkGzV60M7pL0Xent4P+mdb3G69BkVthmzz6c7Dr7
+        eZaqELvbqH0BUd3XTZRD/zXHf1trZ1xxbTvun5FkElttF/wFUlrzGTyvmd2Kq1QV7Kuie8q7wZmh
+        hZ2j5dLNMu92lnlce26W0WaKYs/V/999AVwH5kl1J/DbbtpWYytB/qe3wywREh83MYmiqOePmoyf
+        SJDrM9BSLAHXGGWhRVPQieJlPbOvK5TATcev9383tE4znOK1wtw8L60CsSLcrUshJUwTRkqcBwRJ
+        N9hsWZESjWNeAP4kTM1xchSmTSaGXHJcpupo3PJPP0/bDs/6zlP5cwQ0zyUiP1eszOoGtZextSuD
+        eyHwGYa4InJGTAakviugjjBoDA+hGj8Kbn+nHpm4Y+88o6STDDThRpOKSeLm7X4e9nG7ccptST7E
+        3PWTlMjiQb4pJHgndWYFmHQdxM7DmwyBZBb7EJElKDfiCYaHt4Lx01TuPtnzSCNaXckKnSRWKdy0
+        RnPJhIX/4oKc4KnqkmtooYAxAcsE6rpUcsmdrnc4+HdeP0uDysqYqVKKpblDDSkCVeWLbxSfZ8Zl
+        viau7mRYXQ0aTRUya2TuOiVRVtRYlc1B1TJduma8FngNXZscrBVhXQvQldxx2mhEFRSfcTwuXm1h
+        tv1COHYpdl2dsKEdoeUTUGD+KdTavSsqW2Damsg1l5gxatml0CZHSyhciW952aqO3oF9bFdEV99K
+        WCqKaBtrnmK3UHfROHtDR4kVrR3S2LMzV1T4QUdur8GP29wGlKlMEC96RwnasDXSTdPWtr9B4vpz
+        zq+/09wVuwn4tPqw9W/+AQAA//8DAEUwNOvjDgAA
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 22:30:45 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/market/[id]/resolve
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::75ht4-1665527444214-7aa04ffc7c68
+    status:
+      code: 200
+      message: OK
+version: 1

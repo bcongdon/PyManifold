@@ -1,0 +1,99 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://manifold.markets/api/v0/user/v
+  response:
+    body:
+      string: '{"id":"w1knZ6yBvEhRThYPEYTwlmGv7N33","createdTime":1655431081524,"name":"Velocity","username":"v","url":"https://manifold.markets/v","avatarUrl":"https://firebasestorage.googleapis.com/v0/b/mantic-markets.appspot.com/o/user-images%2Fv%2FjrWCCgX7WR.jpg?alt=media&token=8061788f-a243-421e-9e09-cf7e2747c9c1","bio":"If
+        you prick us, do we not bleed? If you tickle us, do we not laugh?    ...And
+        if you wrong us, shall we not revenge?","website":"","twitterHandle":"","balance":14375.747095552722,"totalDeposits":2165,"profitCached":{"daily":-4021.6334869640086,"allTime":24378.52244799777,"monthly":23887.450404218445,"weekly":7732.4567465165455},"creatorVolumeCached":{"monthly":0,"daily":0,"allTime":0,"weekly":0}}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '0'
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '713'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Oct 2022 19:32:38 GMT
+      Etag:
+      - '"o7lk1798sajt"'
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Matched-Path:
+      - /api/v0/user/[username]
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::9fgzh-1665430358738-3623a1c1e0f2
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: https://manifold.markets/api/v0/user/LivInTheLookingGlass
+  response:
+    body:
+      string: '{"id":"k13AzY3mu8XTju3xRZV3P8qBjEC2","createdTime":1648011015371,"name":"Olivia","username":"LivInTheLookingGlass","url":"https://manifold.markets/LivInTheLookingGlass","avatarUrl":"https://firebasestorage.googleapis.com/v0/b/mantic-markets.appspot.com/o/user-images%2FLivInTheLookingGlass%2FP1120243.jpg?alt=media&token=7bb458ea-8b98-433b-974e-4407497b9d97","bio":"Computer
+        Science & Engineering PhD student who likes testing her predictive skill.
+        I also operate @MarketManagerBot, map on OpenStreetMap, and occasionally post
+        on Mastodon @LivInTheLookingGlass@mastodon.social","website":"https://mastodon.social/@LivInTheLookingGlass","twitterHandle":"","balance":1063.478344253829,"totalDeposits":8545.897013412578,"profitCached":{"monthly":2532.017782211524,"daily":189.5644732912442,"weekly":572.8764126805909,"allTime":6344.837253226209},"creatorVolumeCached":{"monthly":13309.44286061887,"allTime":63710.33633798512,"weekly":5110.048119245551,"daily":300}}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '0'
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '962'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Oct 2022 19:32:38 GMT
+      Etag:
+      - '"slxpolfzrqqq"'
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Matched-Path:
+      - /api/v0/user/[username]
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::rwh2f-1665430358925-cfc8fef0e3df
+    status:
+      code: 200
+      message: OK
+version: 1

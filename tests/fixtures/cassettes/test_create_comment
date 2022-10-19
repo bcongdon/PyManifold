@@ -1,0 +1,213 @@
+interactions:
+- request:
+    body: '{"contractId": "fobho6eQKxn4YhITF1a8", "markdown": "This is an example
+      Markdown comment to test the new Markdown-aware comment API\n\n- This is part
+      of PyManifold, which aims to provide native Python bindings to the Manifold
+      API\n- Source code can be found [here](https://github.com/bcongdon/PyManifold)\n-
+      Have a picture of a cat:\n\n![A picture of a cat](http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg)\n"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '444'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/comment
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA7RUbU/bMBD+K1ak7VNDaZuSthJC3QRbNWAFwjY2oemcXBNTxw62k7ZD/e+7pKV0
+        Eh+ZlCjR3XNvz+Pzk2cduNJ6I8+WcYzWei0v1nmOynmjJ08k5Hk8vZQJcpGMq+uqf1q5KoIGptwW
+        5lYFEjDR8b79185RgIHUQJG97na4dORpPiMvyoRl9IBiuIS8kMguwMwTvVBs2xpzmjm09M2QKVzs
+        AD4swOAONp5OvPX9urWrxEsp0Z0L617vRJJn4jB/wzEoyDE9Y9PVBSgx0zJpsUUm4oyByG09SWF0
+        JRIaBJyokIAu04pxoRKh0gZRj/kc/TzU/lhv2PaNLk1cM0gNxSQBRzbTpUqYt1dvG5IT6/Zf+tSc
+        7OCcsfW5yAzOyJw5V9hRu50Kl5X8gNRpc2okTbRqv9BS9wAmxbqL31xCkyqWQGdypEi39fp+12WG
+        Bv8jCZ+BdABWiNiVdJxIPSAy3GhTcr/oS9ra7MUGwWESiZycnaOjfhh2B2G/E4Qtr7RoJvU+zTu9
+        8Z+7Xl4OfkQPZW95/fNbbzp4/PBw+rHrbXCXUCfwvkpRCdjabulVG/u5qCYqyvBc6zmdkU8NSRvU
+        uAJi8dbIPd5nwiAHSwujqVs8SLVOJUIhbKNFddjm7RyUE7FfS4rOHkBR2EK7xq/bdWJf5BRr33XP
+        XqtO5mmn0z3sBr2DhyI9AemOc0wEvHd6juo45DzoDxD8AR8O/KDX4/4wDNAPgsMwGIZ8mAzDl6sn
+        2pBb62Qgft7V+rchcKZ5po/w6stSBXfZJDrrwGAPcyPLlFALIaUvfI6bS8HXMx982jWSK/e18aXg
+        e0FXJdEjtKLA7xTIJvXJ39wmjfzbQKYNo0ADZkWQekFMqeoVpTwV0qbvriqyRaKIoGB8xTa0slhq
+        iyfeev0XAAD//wMAuH4We3gFAAA=
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 14 Oct 2022 18:41:15 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/comment
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::2hlps-1665772874916-17ac126d904f
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"contractId": "fobho6eQKxn4YhITF1a8", "html": "<p>This is an example HTML
+      comment to test the new HTML-aware comment API</p>\n<ul>\n<li>This is part of
+      PyManifold, which aims to provide native Python bindings to the Manifold API</li>\n<li>Source
+      code can be found <a href=\"https://github.com/bcongdon/PyManifold\">here</a></li>\n<li>Have
+      a picture of a cat:</li>\n</ul>\n<p><img alt=\"A picture of a cat\" src=\"http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg\"
+      /></p>"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '507'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/comment
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA7RUbU/bQAz+K6dI26eGvoWmrYQQYzCqla2MMMYmNPkSJzma3IW7S1+G+t/nJKV0
+        Eh+ZlCiR/dh+/Ph8T46xYEvjjB1ThiEa47ScUOU5SuuMnxwRkQdur6eP54HoJB/j4HR+dqvMVQ2T
+        dguz6wIJGKlw3/5r5yhAQ6KhSF93W1xZ8tSfsROkwjB6QDJcQV5kyC6Cyynb0mJWMYuGvikyicva
+        6cISNO4gJ7OJs7nftHYVeJllaKfC2NcZZOSZWMzfkD4FWaZiNltfghSxyqIWW6YiTBmI3FRdFFot
+        RERNgBULJKBNlWRcyEjIpEZULT5HPze139Yb0r5WpQ4rBYlQSNJzZLEqZcScvXrbkBz03Pwrn5yT
+        HazVpjoPqcaYzKm1hRm324mwackPaDptTkSSSMn2iywVB9AJVix+8wzqVGEGdBbHkua22dzvWKao
+        8T+KcAE0B2CFCG1Jx4mmBySGHTcl94u+pK3MTqgRLEaByMnZHQwOfb839A8Hg27LKQ3qSbVH827/
+        5M9dPy+HP4KHsr/69vN7fzZ8/PBwdtpzGtwXqBI4XzOxELC13dArG/tULCYySHGq1JzOyKdapAZ1
+        sgBS8UZne7rHQiMHQ8uiiC0eJEolGUIhTD2LRafN2zlIK0K3GilacwBFYQpla79qV4ldkVOsedc7
+        f606mWfdbq/T8/oHD0VyDJk9yjES8N6qOcojn3PvcIjgDvlo6Hr9PndHvoeu53V8b+TzUTTyX66c
+        oBG3mpOG8HlXq99awFjxVA3w6vNKenfpJDjvwnAPc52VCaGWIstc4XJsLgVXxS64tGs0rtxV2s0E
+        3wu6KkkeoSQF3lIgm1Qnv7lN6vFvA5nSjAI16DVBqgXRpaxWlPIskDb9kgSM1LK2BaIIoGB8zRpZ
+        WZgpg8fOZvMXAAD//wMAyK6Rl3AFAAA=
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 14 Oct 2022 18:41:15 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/comment
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::sjw9t-1665772875455-f086561d0ac0
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"contractId": "fobho6eQKxn4YhITF1a8", "content": {"type": "doc", "from":
+      0, "to": 403, "content": [{"type": "paragraph", "from": 0, "to": 80, "content":
+      [{"type": "text", "from": 1, "to": 79, "text": "This is an example Tip-Tap comment
+      to test the new Tip-Tap-aware comment API"}]}, {"type": "bulletList", "from":
+      80, "to": 294, "content": [{"type": "listItem", "from": 81, "to": 189, "content":
+      [{"type": "paragraph", "from": 82, "to": 188, "content": [{"type": "text", "from":
+      83, "to": 187, "text": "This is part of the PyManifold project, which aims to
+      provide native Python bindings to the Manifold API"}]}]}, {"type": "listItem",
+      "from": 189, "to": 264, "content": [{"type": "paragraph", "from": 190, "to":
+      263, "content": [{"type": "text", "from": 191, "to": 262, "text": "Source code
+      can be found [here](https://github.com/bcongdon/PyManifold)"}]}]}, {"type":
+      "listItem", "from": 264, "to": 293, "content": [{"type": "paragraph", "from":
+      265, "to": 292, "content": [{"type": "text", "from": 266, "to": 291, "text":
+      "Have a picture of a cat: "}]}]}]}, {"type": "paragraph", "from": 294, "to":
+      296, "content": [{"type": "image", "from": 295, "to": 296, "attrs": {"src":
+      "http://images6.fanpop.com/image/photos/34300000/Kitten-cats-34352405-1600-1200.jpg",
+      "alt": "A picture of a cat", "title": null}}]}]}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1312'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://manifold.markets/api/v0/comment
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4xUa2/bNhT9K4SADRtgWk/rYaAovGHd3CZdsjrb2qIfriTaYiKRGknJSQr/911K
+        tuMtBlIjhoPLcx/n3MdXRxswnXbmju6KgmntTJxCNg0Txpl/dXiJL+bmvR8sZpeP1/3bR81z/WnZ
+        DzBh9jDz0DIElrJA+1rJxpl7E8dIZx554Qny8xHagoKNgrb6v0PqncUbdm+OUH+EJtlktM+dVcU1
+        wT8QhN1D09aMrHhLV9CSPRtiJDFM42/FiGDbwzuFLSh2RC2uls7uy25yTJx3dc3MBddP6dN9qUEW
+        na21RvDSsObJYV+wn2bfKEYaHDzSl+VIwwM4eSYIhjZErgfWVw+XIPha1iVplbxlhZmQbcWLigBv
+        tBUIzT0vUR8wvLcOppKC5FyUXGwGhI1zjLIX61SuZ9wHzoNa8Xm1npP3s4PA8fnh+e8wZP4BHRzp
+        f5CdKmxXkUyBQ5EzspadKMnniin25YfKmFbPXXfDTdXlU+y+m2OiTSmF+yTTjy+yG0iNs/Ctcx7E
+        s4NL8DK7II4PaP/I7jfA5gBpeWE6nF1sLyBLMydjvacVn8mfHUuOz+bnDWzYCXx2AgdjlLYbr1WB
+        UCsjqjh46Hi6BtHKdlBzMLltJY3UbhiFnv2477jBbBRr1RSNsyDyZtSPPY/6gedNb9sN5oXaclw8
+        o4dPhpsaSxS4k7uRqFMoBoaVK97ggx/HsyQJ0iT2fVycTjO1tBfszg8Xjx/Dpkv/Xt124f0fn/4M
+        r9J/frr95efAGXHvwQZwfq95z2Fvu8GvGO0XvF+KVcUupLzDXfi1huFUWtSiBwPqRtV7Qexcrbli
+        OWi8NxL1Z9ONlJuaQcv1oE7vubnbgDC8oA2oO2b0FNpWt9IM79K1gemo63fBm3PZ0Xzlo2xBFFrh
+        XqNsrxpWcvjeyDsmXiV5Hs1SBjTNs5RGYZjTLIkYjSIvibIkz8oseTr2q7H3dhwUFGZ/3u2/g4Br
+        mVcyZtfv7kX0sVqu3viQnmA+1N0GUVte15TTnI1Hlco1BYo3BQewoVLRmucnTtcdysOlQMe/0JEs
+        7ZaO13ho+d6RSEXQUYF6QIhdZtUJe4owTs/wul2igKXcDjY86vbm5w9klJUUtdTstbPb/QsAAP//
+        AwAIvmFT6gYAAA==
+    headers:
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 14 Oct 2022 18:41:16 GMT
+      Server:
+      - Vercel
+      Strict-Transport-Security:
+      - max-age=63072000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Matched-Path:
+      - /api/v0/comment
+      X-Vercel-Cache:
+      - MISS
+      X-Vercel-Id:
+      - cle1::cle1::7sbtw-1665772875907-129e05461b38
+    status:
+      code: 200
+      message: OK
+version: 1
