@@ -5,9 +5,10 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Mapping
 
 from markdown import markdown
+from vcr import VCR
+
 from pymanifold import ManifoldClient, __version__
 from pymanifold.types import Group, Market
-from vcr import VCR
 
 if TYPE_CHECKING:  # pragma: no cover
     from pymanifold.types import Bet, JSONDict, LiteMarket, LiteUser
