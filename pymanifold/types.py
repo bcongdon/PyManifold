@@ -7,6 +7,7 @@ from inspect import signature
 from typing import TYPE_CHECKING, Dict, Mapping, Sequence, Union
 
 if TYPE_CHECKING:  # pragma: no cover
+    from datetime import datetime
     from typing import Iterable, List, Literal, Optional, Type, TypeVar
 
     from .lib import ManifoldClient
@@ -135,6 +136,83 @@ class Market(LiteMarket):
         market.bets = [Bet.from_dict(bet) for bet in bets]
         market.comments = [Comment.from_dict(bet) for bet in comments]
         return market
+
+    # Below methods are orignally from manifoldpy/api.py at commit 4b84f8cf7b4d26f02e82eec3c3309a830f65bf09
+    # They were taken with permission, under the MIT License, under which this project is also licensed
+    @property
+    def num_traders(self) -> int:
+        """Property which caches the number of unique traders in this market.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        if not self.bets:
+            return 0
+        return len({b.userId for b in self.bets})
+
+    def probability_history(self) -> tuple[np.ndarray, np.ndarray]:
+        """Return the probability history of this market as a pair of lockstep tuples.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        if self.outcomeType == "BINARY":
+            assert (
+                self.bets is not None
+            ), "Call get_market before accessing probability history"
+            times: np.ndarray
+            probabilities: np.ndarray
+            if len(self.bets) == 0:
+                times, probabilities = np.array([self.createdTime]), np.array(
+                    [self.probability]
+                )
+            else:
+                s_bets = sorted(self.bets, key=lambda x: x.createdTime)
+                start_prob = s_bets[0].probBefore
+                start_time = self.createdTime
+                t_iter, p_iter = zip(*[(bet.createdTime, bet.probAfter) for bet in s_bets])
+                times, probabilities = np.array((start_time, *t_iter)), np.array(
+                    (start_prob, *p_iter)
+                )
+            return times, probabilities
+        raise NotImplementedError()
+
+    @property
+    def start_probability(self) -> float:
+        """Shortcut property that returns the first probability in this market.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        return self.probability_history()[1][0]
+
+    @property
+    def final_probability(self) -> float:
+        """Shortcut property that returns the most recent probability in this market.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        return self.probability_history()[1][-1]
+
+    def probability_at_time(self, timestamp: int) -> float:
+        """Return the probability at a given time, where time is represented as ms since origin.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        times, probs = self.probability_history()
+        if timestamp <= times[0]:
+            raise ValueError("Timestamp before market creation")
+        elif timestamp >= times[-1]:
+            return probs[-1]
+        else:
+            raise NotImplementedError
+
+    # end section from manifoldpy
+    def probability_at_datetime(self, dt: datetime) -> float:
+        """Convenience method which translates your datetime into one that is Manifold-compatible."""
+        return self.probability_at_time(dt.timestamp() * 1000)
 
 
 @dataclass
