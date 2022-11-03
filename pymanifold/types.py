@@ -207,8 +207,10 @@ class Market(LiteMarket):
         """
         return self.probability_history()[1][-1]
 
-    def probability_at_time(self, timestamp: float) -> float:
+    def probability_at_time(self, timestamp: float, smooth: bool = False) -> float:
         """Return the probability at a given time, where time is represented as ms since origin.
+
+        If smooth is true, then it will give you the weighted mean of the two nearest probabilities.
 
         Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
         licensed.
@@ -222,21 +224,52 @@ class Market(LiteMarket):
             start_guess = 0
             end_guess = len(times)
             idx = end_guess // 2
-            while not (times[idx - 1] <= timestamp < times[idx]):
-                if times[idx] >= timestamp:
-                    start_guess = (start_guess + idx) // 2
-                else:
-                    end_guess = (end_guess + idx) // 2
-                new_idx = (start_guess + end_guess) // 2
-                if new_idx == idx:
-                    raise RuntimeError("Loop would have repeated")
-                idx = new_idx
-            return probs[idx]
+            try:
+                while not (times[idx - 1] <= timestamp < times[idx]):
+                    if times[idx] >= timestamp:
+                        start_guess = (start_guess + idx) // 2
+                    else:
+                        end_guess = (end_guess + idx) // 2
+                    new_idx = (start_guess + end_guess) // 2
+                    if new_idx == idx:
+                        raise RuntimeError("Loop would have repeated")
+                    idx = new_idx
+            except IndexError:
+                # this means that we fell off the edge of the probability map, so just return the nearest one
+                if idx <= 0:
+                    return probs[0]
+                return probs[-1]
+            if smooth:
+                weight_1 = 1 / abs(timestamp - times[idx - 1])
+                weight_2 = 1 / abs(timestamp - times[idx])
+                total_weight = weight_1 + weight_2
+                return (probs[idx - 1] * weight_1 + probs[idx] * weight_2) / total_weight
+            return probs[idx - 1]
 
     # end section from manifoldpy
+    def value_at_time(self, timestamp: float, smooth: bool = False) -> float:
+        """Get the value at a given time.
+
+        Note: if this is a binary market, this is the same thing as probability_at_time()
+        """
+        if self.outcomeType == "BINARY":
+            return self.probability_at_time(timestamp, smooth)
+        assert self.min is not None
+        assert self.max is not None
+        return prob_to_number_cpmm1(
+            self.probability_at_time(timestamp, smooth),
+            self.min,
+            self.max,
+            bool(self.isLogScale)
+        )
+
     def probability_at_datetime(self, dt: datetime) -> float:
         """Translate your datetime into one that is Manifold-compatible."""
         return self.probability_at_time(dt.timestamp() * 1000)
+
+    def value_at_datetime(self, dt: datetime) -> float:
+        """Translate your datetime into one that is Manifold-compatible."""
+        return self.value_at_time(dt.timestamp() * 1000)
 
 
 @dataclass
