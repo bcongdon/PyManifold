@@ -6,6 +6,8 @@ from dataclasses import dataclass, field
 from inspect import signature
 from typing import TYPE_CHECKING, Dict, Mapping, Sequence, Union
 
+from .utils.math import prob_to_number_cpmm1
+
 if TYPE_CHECKING:  # pragma: no cover
     from datetime import datetime
     from typing import Iterable, List, Literal, Optional, Type, TypeVar
@@ -150,32 +152,42 @@ class Market(LiteMarket):
             return 0
         return len({b.userId for b in self.bets})
 
-    def probability_history(self) -> tuple[np.ndarray, np.ndarray]:
-        """Return the probability history of this market as a pair of lockstep tuples.
+    def probability_history(self) -> tuple[tuple[float, ...], tuple[float, ...]]:
+        """Return the probability/value history of this market as a pair of lockstep tuples."""
+        if self.outcomeType == "BINARY":
+            return self._binary_probability_history()
+        elif self.outcomeType == "PSEUDO_NUMERIC":
+            times, probabilities = self._binary_probability_history()
+            assert self.min is not None
+            assert self.max is not None
+            values = (prob_to_number_cpmm1(prob, self.min, self.max, bool(self.isLogScale)) for prob in probabilities)
+            return times, tuple(values)
+        raise NotImplementedError()
+
+    def _binary_probability_history(self) -> tuple[tuple[float, ...], tuple[float, ...]]:
+        """Return the binary probability history of this market as a pair of lockstep tuples.
 
         Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
         licensed.
         """
-        if self.outcomeType == "BINARY":
-            assert (
-                self.bets is not None
-            ), "Call get_market before accessing probability history"
-            times: np.ndarray
-            probabilities: np.ndarray
-            if len(self.bets) == 0:
-                times, probabilities = np.array([self.createdTime]), np.array(
-                    [self.probability]
-                )
-            else:
-                s_bets = sorted(self.bets, key=lambda x: x.createdTime)
-                start_prob = s_bets[0].probBefore
-                start_time = self.createdTime
-                t_iter, p_iter = zip(*[(bet.createdTime, bet.probAfter) for bet in s_bets])
-                times, probabilities = np.array((start_time, *t_iter)), np.array(
-                    (start_prob, *p_iter)
-                )
-            return times, probabilities
-        raise NotImplementedError()
+        assert (
+            self.bets is not None
+        ), "Call get_market before accessing probability history"
+        times: tuple[float, ...]
+        probabilities: tuple[float, ...]
+        if len(self.bets) == 0:
+            times = (self.createdTime, )
+            assert self.probability is not None
+            probabilities = (self.probability, )
+        else:
+            s_bets = sorted(self.bets, key=lambda x: x.createdTime)
+            start_prob = s_bets[0].probBefore
+            assert start_prob is not None
+            start_time = self.createdTime
+            t_iter, p_iter = zip(*[(bet.createdTime, bet.probAfter) for bet in s_bets])
+            times = (start_time, *t_iter)
+            probabilities = (start_prob, *p_iter)
+        return times, probabilities
 
     @property
     def start_probability(self) -> float:
@@ -195,7 +207,7 @@ class Market(LiteMarket):
         """
         return self.probability_history()[1][-1]
 
-    def probability_at_time(self, timestamp: int) -> float:
+    def probability_at_time(self, timestamp: float) -> float:
         """Return the probability at a given time, where time is represented as ms since origin.
 
         Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
@@ -207,11 +219,23 @@ class Market(LiteMarket):
         elif timestamp >= times[-1]:
             return probs[-1]
         else:
-            raise NotImplementedError
+            start_guess = 0
+            end_guess = len(times)
+            idx = end_guess // 2
+            while not (times[idx - 1] <= timestamp < times[idx]):
+                if times[idx] >= timestamp:
+                    start_guess = (start_guess + idx) // 2
+                else:
+                    end_guess = (end_guess + idx) // 2
+                new_idx = (start_guess + end_guess) // 2
+                if new_idx == idx:
+                    raise RuntimeError("Loop would have repeated")
+                idx = new_idx
+            return probs[idx]
 
     # end section from manifoldpy
     def probability_at_datetime(self, dt: datetime) -> float:
-        """Convenience method which translates your datetime into one that is Manifold-compatible."""
+        """Translate your datetime into one that is Manifold-compatible."""
         return self.probability_at_time(dt.timestamp() * 1000)
 
 
