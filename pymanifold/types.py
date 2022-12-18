@@ -125,19 +125,27 @@ class LiteMarket(DictDeserializable):
 class Market(LiteMarket):
     """Represents a market."""
 
-    bets: List[Bet] = field(default_factory=list)
-    comments: List[Comment] = field(default_factory=list)
     answers: Optional[List[Dict[str, Union[str, float]]]] = None
+    _bets: List[Bet] = field(default_factory=list)
+    _bets_cached: bool = False
+    _comments: List[Comment] = field(default_factory=list)
+    _comments_cached: bool = False
 
-    @classmethod
-    def from_dict(cls, env: JSONDict) -> 'Market':
-        """Take a dictionary and return an instance of the associated class."""
-        market = super(Market, cls).from_dict(env)
-        bets: Sequence[JSONDict] = env['bets']  # type: ignore[assignment]
-        comments: Sequence[JSONDict] = env['comments']  # type: ignore[assignment]
-        market.bets = [Bet.from_dict(bet) for bet in bets]
-        market.comments = [Comment.from_dict(bet) for bet in comments]
-        return market
+    @property
+    def bets(self) -> list[Bet]:
+        """Now that bets aren't returned as part of a full market, let's just lazy-load them."""
+        from .lib import ManifoldClient
+        if not self._bets_cached:
+            self._bets = list(ManifoldClient().get_bets(contractId=self.id))
+        return self._bets
+
+    @property
+    def comments(self) -> list[Comment]:
+        """Now that comments aren't returned as part of a full market, let's just lazy-load them."""
+        from .lib import ManifoldClient
+        if not self._comments_cached:
+            self._comments = list(ManifoldClient().get_comments(contractId=self.id))
+        return self._comments
 
     # Below methods are orignally from manifoldpy/api.py at commit 4b84f8cf7b4d26f02e82eec3c3309a830f65bf09
     # They were taken with permission, under the MIT License, under which this project is also licensed

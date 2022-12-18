@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Dict, cast, overload
 
 import requests
 
-from .types import Bet, Group, JSONDict, LiteMarket, LiteUser, Market
+from .types import Bet, Comment, Group, JSONDict, LiteMarket, LiteUser, Market
 from .utils.math import number_to_prob_cpmm1
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -63,23 +63,47 @@ class ManifoldClient:
         limit: Optional[int] = None,
         before: Optional[str] = None,
         username: Optional[str] = None,
-        market: Optional[str] = None,
+        contractId: Optional[str] = None,
+        contractSlug: Optional[str] = None,
     ) -> List[Bet]:
         """List all bets."""
-        return list(self.get_bets(limit, before, username, market))
+        return list(self.get_bets(limit, before, username, contractId, contractSlug))
 
     def get_bets(
         self,
         limit: Optional[int] = None,
         before: Optional[str] = None,
         username: Optional[str] = None,
-        market: Optional[str] = None,
+        contractId: Optional[str] = None,
+        contractSlug: Optional[str] = None,
     ) -> Iterable[Bet]:
         """Iterate over all bets."""
         response = requests.get(
-            url=BASE_URI + "/bets", params={"limit": limit, "before": before, "username": username, "market": market}
+            url=BASE_URI + "/bets", params={
+                "limit": limit, "before": before, "username": username, "contractId": contractId,
+                "contractSlug": contractSlug
+            }
         )
         return (Bet.from_dict(market) for market in response.json())
+
+    def list_comments(
+        self,
+        contractId: Optional[str] = None,
+        contractSlug: Optional[str] = None,
+    ) -> List[Comment]:
+        """List all comments."""
+        return list(self.get_comments(contractId, contractSlug))
+
+    def get_comments(
+        self,
+        contractId: Optional[str] = None,
+        contractSlug: Optional[str] = None,
+    ) -> Iterable[Comment]:
+        """Iterate over all comments."""
+        response = requests.get(
+            url=BASE_URI + "/comments", params={"contractId": contractId, "contractSlug": contractSlug}
+        )
+        return (Comment.from_dict(market) for market in response.json())
 
     def get_market_by_id(self, market_id: str) -> Market:
         """Get a market by id."""
