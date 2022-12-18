@@ -24,7 +24,7 @@ manifold_vcr = VCR(
 
 get_bet_params: list[dict[str, str]] = [
     {'username': 'LivInTheLookingGlass'},
-    {'market': 'will-bitcoins-price-fall-below-25k'},
+    {'contractSlug': 'will-bitcoins-price-fall-below-25k'},
     {}
 ]
 

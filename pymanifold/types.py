@@ -6,7 +6,10 @@ from dataclasses import dataclass, field
 from inspect import signature
 from typing import TYPE_CHECKING, Dict, Mapping, Sequence, Union
 
+from .utils.math import prob_to_number_cpmm1
+
 if TYPE_CHECKING:  # pragma: no cover
+    from datetime import datetime
     from typing import Iterable, List, Literal, Optional, Type, TypeVar
 
     from .lib import ManifoldClient
@@ -90,9 +93,9 @@ class LiteMarket(DictDeserializable):
 
     outcomeType: Literal["BINARY", "FREE_RESPONSE", "NUMERIC", "PSEUDO_NUMERIC", "MULTIPLE_CHOICE"]
     pool: float | Mapping[str, float] | None
-    volume7Days: float
-    volume24Hours: float
     isResolved: bool
+    volume7Days: float | None = None
+    volume24Hours: float | None = None
     description: str = ""
     lastUpdatedTime: Optional[int] = None
     probability: Optional[float] = None
@@ -122,19 +125,159 @@ class LiteMarket(DictDeserializable):
 class Market(LiteMarket):
     """Represents a market."""
 
-    bets: List[Bet] = field(default_factory=list)
-    comments: List[Comment] = field(default_factory=list)
     answers: Optional[List[Dict[str, Union[str, float]]]] = None
+    _bets: List[Bet] = field(default_factory=list)
+    _bets_cached: bool = False
+    _comments: List[Comment] = field(default_factory=list)
+    _comments_cached: bool = False
 
-    @classmethod
-    def from_dict(cls, env: JSONDict) -> 'Market':
-        """Take a dictionary and return an instance of the associated class."""
-        market = super(Market, cls).from_dict(env)
-        bets: Sequence[JSONDict] = env['bets']  # type: ignore[assignment]
-        comments: Sequence[JSONDict] = env['comments']  # type: ignore[assignment]
-        market.bets = [Bet.from_dict(bet) for bet in bets]
-        market.comments = [Comment.from_dict(bet) for bet in comments]
-        return market
+    @property
+    def bets(self) -> list[Bet]:
+        """Now that bets aren't returned as part of a full market, let's just lazy-load them."""
+        from .lib import ManifoldClient
+        if not self._bets_cached:
+            self._bets = list(ManifoldClient().get_bets(contractId=self.id))
+        return self._bets
+
+    @property
+    def comments(self) -> list[Comment]:
+        """Now that comments aren't returned as part of a full market, let's just lazy-load them."""
+        from .lib import ManifoldClient
+        if not self._comments_cached:
+            self._comments = list(ManifoldClient().get_comments(contractId=self.id))
+        return self._comments
+
+    # Below methods are orignally from manifoldpy/api.py at commit 4b84f8cf7b4d26f02e82eec3c3309a830f65bf09
+    # They were taken with permission, under the MIT License, under which this project is also licensed
+    @property
+    def num_traders(self) -> int:
+        """Property which caches the number of unique traders in this market.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        if not self.bets:
+            return 0
+        return len({b.userId for b in self.bets})
+
+    def probability_history(self) -> tuple[tuple[float, ...], tuple[float, ...]]:
+        """Return the probability/value history of this market as a pair of lockstep tuples."""
+        if self.outcomeType == "BINARY":
+            return self._binary_probability_history()
+        elif self.outcomeType == "PSEUDO_NUMERIC":
+            times, probabilities = self._binary_probability_history()
+            assert self.min is not None
+            assert self.max is not None
+            values = (prob_to_number_cpmm1(prob, self.min, self.max, bool(self.isLogScale)) for prob in probabilities)
+            return times, tuple(values)
+        raise NotImplementedError()
+
+    def _binary_probability_history(self) -> tuple[tuple[float, ...], tuple[float, ...]]:
+        """Return the binary probability history of this market as a pair of lockstep tuples.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        assert (
+            self.bets is not None
+        ), "Call get_market before accessing probability history"
+        times: tuple[float, ...]
+        probabilities: tuple[float, ...]
+        if len(self.bets) == 0:
+            times = (self.createdTime, )
+            assert self.probability is not None
+            probabilities = (self.probability, )
+        else:
+            s_bets = sorted(self.bets, key=lambda x: x.createdTime)
+            start_prob = s_bets[0].probBefore
+            assert start_prob is not None
+            start_time = self.createdTime
+            t_iter, p_iter = zip(*[(bet.createdTime, bet.probAfter) for bet in s_bets])
+            times = (start_time, *t_iter)
+            probabilities = (start_prob, *p_iter)
+        return times, probabilities
+
+    @property
+    def start_probability(self) -> float:
+        """Shortcut property that returns the first probability in this market.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        return self.probability_history()[1][0]
+
+    @property
+    def final_probability(self) -> float:
+        """Shortcut property that returns the most recent probability in this market.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        return self.probability_history()[1][-1]
+
+    def probability_at_time(self, timestamp: float, smooth: bool = False) -> float:
+        """Return the probability at a given time, where time is represented as ms since origin.
+
+        If smooth is true, then it will give you the weighted mean of the two nearest probabilities.
+
+        Originally from manifoldpy/api.py, with permission, under the MIT License, under which this project is also
+        licensed.
+        """
+        times, probs = self.probability_history()
+        if timestamp <= times[0]:
+            raise ValueError("Timestamp before market creation")
+        elif timestamp >= times[-1]:
+            return probs[-1]
+        else:
+            start_guess = 0
+            end_guess = len(times)
+            idx = end_guess // 2
+            try:
+                while not (times[idx - 1] <= timestamp < times[idx]):
+                    if times[idx] >= timestamp:
+                        start_guess = (start_guess + idx) // 2
+                    else:
+                        end_guess = (end_guess + idx) // 2
+                    new_idx = (start_guess + end_guess) // 2
+                    if new_idx == idx:
+                        raise RuntimeError("Loop would have repeated")
+                    idx = new_idx
+            except IndexError:
+                # this means that we fell off the edge of the probability map, so just return the nearest one
+                if idx <= 0:
+                    return probs[0]
+                return probs[-1]
+            if smooth:
+                weight_1 = 1 / abs(timestamp - times[idx - 1])
+                weight_2 = 1 / abs(timestamp - times[idx])
+                total_weight = weight_1 + weight_2
+                return (probs[idx - 1] * weight_1 + probs[idx] * weight_2) / total_weight
+            return probs[idx - 1]
+
+    # end section from manifoldpy
+    def value_at_time(self, timestamp: float, smooth: bool = False) -> float:
+        """Get the value at a given time.
+
+        Note: if this is a binary market, this is the same thing as probability_at_time()
+        """
+        if self.outcomeType == "BINARY":
+            return self.probability_at_time(timestamp, smooth)
+        assert self.min is not None
+        assert self.max is not None
+        return prob_to_number_cpmm1(
+            self.probability_at_time(timestamp, smooth),
+            self.min,
+            self.max,
+            bool(self.isLogScale)
+        )
+
+    def probability_at_datetime(self, dt: datetime) -> float:
+        """Translate your datetime into one that is Manifold-compatible."""
+        return self.probability_at_time(dt.timestamp() * 1000)
+
+    def value_at_datetime(self, dt: datetime) -> float:
+        """Translate your datetime into one that is Manifold-compatible."""
+        return self.value_at_time(dt.timestamp() * 1000)
 
 
 @dataclass
